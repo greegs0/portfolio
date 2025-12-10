@@ -4,5 +4,14 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import PushswapController from "./pushswap_controller"
+application.register("pushswap", PushswapController)
+
+import HeroController from "./hero_controller"
+application.register("hero", HeroController)
+
+import PrintfController from "./printf_controller"
+application.register("printf", PrintfController)
+
+import SolongController from "./solong_controller"
+application.register("solong", SolongController)

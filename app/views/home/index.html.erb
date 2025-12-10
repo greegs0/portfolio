@@ -1,0 +1,628 @@
+<main class="bg-dark-950">
+
+  <!-- ============================================================
+       NAVBAR
+       ============================================================ -->
+  <nav class="navbar-glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <!-- Logo / Name -->
+      <a href="#hero" class="text-white font-bold text-lg hover:text-neon-400 transition-colors">
+        GL<span class="text-neon-500">.</span>
+      </a>
+
+      <!-- Nav Links -->
+      <div class="flex items-center gap-8">
+        <a href="#pushswap" class="text-gray-400 hover:text-neon-400 transition-colors text-sm">
+          Push_swap
+        </a>
+        <a href="#projects" class="text-gray-400 hover:text-neon-400 transition-colors text-sm">
+          Projets
+        </a>
+        <a href="#contact" class="btn-neon text-sm px-4 py-2">
+          Contact
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO SECTION
+       ============================================================ -->
+  <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden" data-controller="hero">
+    <!-- Canvas background -->
+    <canvas
+      data-hero-target="canvas"
+      class="absolute inset-0 w-full h-full"
+    ></canvas>
+
+    <!-- Content -->
+    <div class="relative z-10 text-center px-6">
+      <!-- Avatar avec effet neon -->
+      <div data-hero-target="avatar" class="mb-8">
+        <div class="avatar-glow inline-block rounded-full p-1">
+          <%= image_tag "image0.jpeg",
+              class: "w-32 h-32 md:w-40 md:h-40 rounded-full object-cover grayscale hover:grayscale-0 transition-all duration-500",
+              alt: "Grégory Lefebvre" %>
+        </div>
+      </div>
+
+      <h1
+        data-hero-target="title"
+        class="text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight"
+      >
+        Grégory Lefebvre<span class="text-neon-500">.</span>
+      </h1>
+
+      <p
+        data-hero-target="subtitle"
+        class="text-xl md:text-2xl text-gray-400 mb-8 font-light"
+      >
+        Développeur <span class="text-neon-400">Full-Stack</span>
+      </p>
+
+      <div data-hero-target="cta" class="flex flex-wrap gap-4 justify-center">
+        <a href="#pushswap" class="btn-neon-solid">
+          Voir mes projets
+        </a>
+        <a href="#contact" class="btn-neon">
+          Me contacter
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Gradient overlay bottom -->
+    <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark-950 to-transparent"></div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line"></div>
+
+  <!-- ============================================================
+       PUSH_SWAP SECTION
+       ============================================================ -->
+  <section id="pushswap" class="relative py-24 bg-grid">
+    <div data-controller="pushswap" data-pushswap-speed-value="100" class="max-w-7xl mx-auto px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+          Push_swap
+        </h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          Algorithme de tri en C avec seulement deux piles et un set d'opérations limité.
+          Le défi : trier n'importe quelle liste avec le <span class="text-neon-400">moins d'opérations possible</span>.
+        </p>
+      </div>
+
+      <!-- Rules Card -->
+      <div class="glass-card border-neon p-8 mb-10 max-w-4xl mx-auto transition-all duration-300">
+        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+          <span class="text-neon-500">&#9679;</span>
+          Les règles du jeu
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+          <div>
+            <p class="font-medium text-neon-400 mb-3">Opérations disponibles :</p>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">sa/sb</code>
+                <span>Swap les 2 premiers éléments</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">pa/pb</code>
+                <span>Push vers l'autre pile</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">ra/rb</code>
+                <span>Rotate (premier → dernier)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">rra/rrb</code>
+                <span>Reverse rotate</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-medium text-neon-400 mb-3">Objectifs :</p>
+            <ul class="space-y-2 text-gray-300">
+              <li class="flex items-center gap-2">
+                <span class="text-neon-500">→</span>
+                100 nombres : moins de <strong class="text-white">700</strong> opérations
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-neon-500">→</span>
+                500 nombres : moins de <strong class="text-white">5500</strong> opérations
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-neon-500">→</span>
+                Tout doit finir trié dans la Stack A
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Size Buttons -->
+      <div class="text-center mb-8">
+        <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Taille de la liste</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <button data-action="click->pushswap#generate3" class="btn-neon text-sm px-4 py-2">3</button>
+          <button data-action="click->pushswap#generate5" class="btn-neon text-sm px-4 py-2">5</button>
+          <button data-action="click->pushswap#generate10" class="btn-neon text-sm px-4 py-2">10</button>
+          <button data-action="click->pushswap#generate100" class="btn-neon text-sm px-4 py-2">100</button>
+          <button data-action="click->pushswap#generate500" class="btn-neon text-sm px-4 py-2">500</button>
+        </div>
+      </div>
+
+      <!-- Visualizer Canvas -->
+      <div class="relative glass-card border-neon overflow-hidden" style="height: 500px;">
+        <canvas data-pushswap-target="canvas" class="w-full h-full"></canvas>
+      </div>
+
+      <!-- Controls -->
+      <div class="glass-card border-neon p-5 mt-4">
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <!-- Playback buttons -->
+          <div class="flex items-center gap-1">
+            <button
+              data-action="click->pushswap#stop"
+              class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all"
+              title="Recommencer"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <rect x="6" y="6" width="12" height="12"/>
+              </svg>
+            </button>
+            <button
+              data-action="click->pushswap#stepBack"
+              class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all"
+              title="Étape précédente"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
+              </svg>
+            </button>
+            <button
+              data-action="click->pushswap#pause"
+              class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all"
+              title="Pause"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 4h4v16H6zM14 4h4v16h-4z"/>
+              </svg>
+            </button>
+            <button
+              data-action="click->pushswap#play"
+              class="p-3 text-dark-950 bg-neon-500 hover:bg-neon-400 rounded-lg transition-all shadow-neon-subtle hover:shadow-neon"
+              title="Lancer le tri"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </button>
+            <button
+              data-action="click->pushswap#step"
+              class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all"
+              title="Étape suivante"
+            >
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+
+          <!-- Speed -->
+          <div class="flex items-center gap-3">
+            <span class="text-gray-500 text-sm">Vitesse</span>
+            <input
+              type="range"
+              min="1"
+              max="2000"
+              value="200"
+              data-action="input->pushswap#setSpeed"
+              class="w-28 accent-neon-500"
+            >
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+
+          <!-- Counter -->
+          <div class="flex items-center gap-2">
+            <span data-pushswap-target="opCount" class="text-neon-400 font-mono text-lg"></span>
+            <span data-pushswap-target="status" class="text-neon-300 text-sm font-medium"></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line"></div>
+
+  <!-- ============================================================
+       FT_PRINTF SECTION
+       ============================================================ -->
+  <section id="ftprintf" class="relative py-24">
+    <div data-controller="printf" class="max-w-7xl mx-auto px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+          ft_printf
+        </h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          Recréation de la fonction printf en C. Parsing de format strings,
+          gestion des <span class="text-neon-400">conversions</span> et des <span class="text-neon-400">flags</span>.
+        </p>
+      </div>
+
+      <!-- Conversions Card -->
+      <div class="glass-card border-neon p-8 mb-10 max-w-4xl mx-auto">
+        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+          <span class="text-neon-500">&#9679;</span>
+          Conversions supportées
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+          <div class="flex items-center gap-3">
+            <code class="text-yellow-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%c</code>
+            <span class="text-gray-400">char (1 caractère)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-green-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%s</code>
+            <span class="text-gray-400">string (texte)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-pink-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%p</code>
+            <span class="text-gray-400">pointeur (adresse)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-cyan-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%d</code>
+            <span class="text-gray-400">int (entier signé)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-cyan-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%i</code>
+            <span class="text-gray-400">int (entier signé)</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-cyan-300 bg-dark-800 px-3 py-1.5 rounded font-mono">%u</code>
+            <span class="text-gray-400">unsigned int</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-purple-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%x</code>
+            <span class="text-gray-400">hex minuscule</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-purple-300 bg-dark-800 px-3 py-1.5 rounded font-mono">%X</code>
+            <span class="text-gray-400">hex majuscule</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <code class="text-gray-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%%</code>
+            <span class="text-gray-400">caractère %</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Simulator -->
+      <div class="glass-card border-neon p-8 max-w-4xl mx-auto">
+        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+          <span class="text-neon-500">&#9679;</span>
+          Simulateur interactif
+        </h3>
+
+        <!-- Format Input -->
+        <div class="mb-6">
+          <label class="text-gray-400 text-sm mb-2 block">Format string</label>
+          <input
+            type="text"
+            data-printf-target="format"
+            data-action="input->printf#parse"
+            value="Bonjour %s ! Tu as %d messages."
+            class="w-full bg-dark-800 border border-dark-600 rounded-lg px-4 py-3 text-white font-mono text-sm focus:border-neon-500 focus:outline-none transition-colors"
+            placeholder="Ex: Bonjour %s, tu as %d ans"
+          >
+        </div>
+
+        <!-- Arguments -->
+        <div class="mb-6">
+          <label class="text-gray-400 text-sm mb-2 block">Arguments</label>
+          <div data-printf-target="argsContainer" class="flex flex-wrap gap-3">
+            <!-- Arguments générés dynamiquement -->
+          </div>
+        </div>
+
+        <!-- Parsing Visualization -->
+        <div class="mb-6">
+          <label class="text-gray-400 text-sm mb-2 block">Parsing</label>
+          <div data-printf-target="parsing" class="bg-dark-900 rounded-lg p-4 font-mono text-sm flex flex-wrap gap-1 min-h-[48px]">
+            <!-- Tokens générés dynamiquement -->
+          </div>
+        </div>
+
+        <!-- Output -->
+        <div>
+          <label class="text-gray-400 text-sm mb-2 block">Output</label>
+          <div class="bg-dark-900 rounded-lg p-4 border border-dark-700">
+            <code data-printf-target="output" class="text-neon-400 font-mono"></code>
+            <span data-printf-target="charCount" class="text-gray-500 text-xs ml-4"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example Buttons -->
+      <div class="text-center mt-8">
+        <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Exemples</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <button data-action="click->printf#example1" class="btn-neon text-sm px-4 py-2">Texte + Entier</button>
+          <button data-action="click->printf#example2" class="btn-neon text-sm px-4 py-2">Hexadécimal</button>
+          <button data-action="click->printf#example3" class="btn-neon text-sm px-4 py-2">Pointeur</button>
+          <button data-action="click->printf#example4" class="btn-neon text-sm px-4 py-2">Mixte</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line"></div>
+
+  <!-- ============================================================
+       SO_LONG SECTION
+       ============================================================ -->
+  <section id="solong" class="relative py-24 bg-grid">
+    <div data-controller="solong" class="max-w-7xl mx-auto px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+          So_long
+        </h2>
+        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+          Mini-jeu 2D en C avec la MiniLibX. Collecte tous les items et atteins la sortie
+          avec le <span class="text-neon-400">minimum de mouvements</span>.
+        </p>
+      </div>
+
+      <!-- Rules Card -->
+      <div class="glass-card border-neon p-8 mb-10 max-w-4xl mx-auto">
+        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+          <span class="text-neon-500">&#9679;</span>
+          Règles du jeu
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-cyan-500 shadow-[0_0_10px_rgba(0,200,255,0.5)]"></div>
+            <div>
+              <span class="text-white font-medium">P</span>
+              <p class="text-gray-500 text-xs">Joueur</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]"></div>
+            <div>
+              <span class="text-white font-medium">C</span>
+              <p class="text-gray-500 text-xs">Collectible</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
+            <div>
+              <span class="text-white font-medium">E</span>
+              <p class="text-gray-500 text-xs">Sortie</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded bg-dark-600 border border-dark-500"></div>
+            <div>
+              <span class="text-white font-medium">1</span>
+              <p class="text-gray-500 text-xs">Mur</p>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 pt-6 border-t border-dark-700">
+          <p class="text-gray-400 text-sm">
+            <span class="text-neon-400">Objectif :</span> Collecte tous les items
+            <span class="text-yellow-400">C</span> puis atteins la sortie
+            <span class="text-purple-400">E</span>. Utilise
+            <code class="bg-dark-800 px-2 py-0.5 rounded text-xs">ZQSD</code> ou les
+            <code class="bg-dark-800 px-2 py-0.5 rounded text-xs">flèches</code> pour te déplacer.
+          </p>
+        </div>
+
+        <!-- Bonus Toggle -->
+        <div class="mt-6 pt-6 border-t border-dark-700">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center">
+                <span class="text-red-400 text-xs">👻</span>
+              </div>
+              <div>
+                <span class="text-white font-medium">Mode Survie</span>
+                <p class="text-gray-500 text-xs">Un fantôme te pourchasse !</p>
+              </div>
+            </div>
+            <button
+              data-action="click->solong#toggleBonus"
+              data-solong-target="bonusToggle"
+              class="relative w-14 h-7 rounded-full bg-dark-700 border border-dark-500 transition-all duration-300 hover:border-red-500/50"
+            >
+              <span class="absolute left-1 top-1 w-5 h-5 rounded-full bg-gray-500 transition-all duration-300"></span>
+            </button>
+          </div>
+          <p class="text-orange-400/70 text-xs mt-3 italic">
+            ⚠️ Le mode survie est un bonus exclusif à cette version web, non implémenté dans la version C originale.
+          </p>
+        </div>
+      </div>
+
+      <!-- Game Area -->
+      <div class="glass-card border-neon overflow-hidden max-w-4xl mx-auto">
+        <!-- Game Header -->
+        <div class="flex items-center justify-between p-4 border-b border-dark-700">
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+              <span class="text-gray-400 text-sm">Mouvements:</span>
+              <span data-solong-target="moves" class="text-neon-400 font-mono text-lg">0</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-gray-400 text-sm">Collectibles:</span>
+              <span data-solong-target="collectibles" class="text-yellow-400 font-mono text-lg">0/0</span>
+            </div>
+          </div>
+          <div data-solong-target="status" class="text-sm font-medium"></div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="relative" style="height: 400px;">
+          <canvas data-solong-target="canvas" class="w-full h-full"></canvas>
+        </div>
+
+        <!-- Controls -->
+        <div class="flex items-center justify-center gap-4 p-4 border-t border-dark-700">
+          <button data-action="click->solong#restart" class="btn-neon text-sm px-4 py-2">
+            Recommencer
+          </button>
+        </div>
+      </div>
+
+      <!-- Map Examples -->
+      <div class="text-center mt-8">
+        <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Maps</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <button data-action="click->solong#loadMap1" class="btn-neon text-sm px-4 py-2">Découverte</button>
+          <button data-action="click->solong#loadMap2" class="btn-neon text-sm px-4 py-2">Carrefour</button>
+          <button data-action="click->solong#loadMap3" class="btn-neon text-sm px-4 py-2">Labyrinthe</button>
+          <button data-action="click->solong#loadMap4" class="btn-neon text-sm px-4 py-2">Spirale</button>
+          <button data-action="click->solong#loadMap5" class="btn-neon text-sm px-4 py-2">Piège</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line"></div>
+
+  <!-- ============================================================
+       OTHER PROJECTS
+       ============================================================ -->
+  <section id="projects" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+          Autres Projets
+        </h2>
+        <p class="text-gray-400 max-w-xl mx-auto">
+          Une sélection de projets réalisés à l'école 42 et en freelance.
+        </p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- So_long -->
+        <div class="glass-card border-neon p-8 group cursor-pointer">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-neon-500 text-3xl font-mono">01</span>
+          </div>
+          <h3 class="text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
+            So_long
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Mini-jeu 2D en C avec la MiniLibX. Parsing de maps, gestion des sprites et animations.
+          </p>
+          <div class="flex gap-2">
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">C</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">MiniLibX</span>
+          </div>
+        </div>
+
+        <!-- ft_printf -->
+        <div class="glass-card border-neon p-8 group cursor-pointer">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-neon-500 text-3xl font-mono">02</span>
+          </div>
+          <h3 class="text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
+            ft_printf
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Recréation de la fonction printf. Gestion des conversions, flags et précisions.
+          </p>
+          <div class="flex gap-2">
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">C</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">Variadic</span>
+          </div>
+        </div>
+
+        <!-- The Village -->
+        <div class="glass-card border-neon p-8 group cursor-pointer">
+          <div class="flex items-start justify-between mb-4">
+            <span class="text-neon-500 text-3xl font-mono">03</span>
+          </div>
+          <h3 class="text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
+            The Village
+          </h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-4">
+            Application web Full-Stack. Plateforme communautaire avec authentification et temps réel.
+          </p>
+          <div class="flex gap-2">
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">Rails</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">React</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">PostgreSQL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line"></div>
+
+  <!-- ============================================================
+       CONTACT SECTION
+       ============================================================ -->
+  <section id="contact" class="py-32 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+        Let's talk<span class="text-neon-500">.</span>
+      </h2>
+      <p class="text-gray-400 mb-10 text-lg">
+        Une idée de projet ? Une question ? N'hésitez pas à me contacter.
+      </p>
+
+      <a href="mailto:greg@email.com" class="btn-neon-solid text-lg inline-flex items-center gap-2">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+        </svg>
+        greg@email.com
+      </a>
+
+      <!-- Social links -->
+      <div class="flex justify-center gap-6 mt-10">
+        <a href="#" class="text-gray-500 hover:text-neon-400 transition-colors">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+        <a href="#" class="text-gray-500 hover:text-neon-400 transition-colors">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 border-t border-dark-700">
+    <div class="text-center text-gray-600 text-sm">
+      <p>© 2025 Greg. Built with Rails & Stimulus.</p>
+    </div>
+  </footer>
+
+</main>
