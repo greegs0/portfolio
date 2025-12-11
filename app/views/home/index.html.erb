@@ -1,29 +1,63 @@
-<main class="bg-dark-950">
+<main class="bg-dark-950" data-controller="scroll-reveal">
 
   <!-- ============================================================
        NAVBAR
        ============================================================ -->
-  <nav class="navbar-glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
-    <div class="max-w-6xl mx-auto flex items-center justify-between">
-      <!-- Logo / Name -->
-      <a href="#hero" class="text-white font-bold text-lg hover:text-neon-400 transition-colors">
-        GL<span class="text-neon-500">.</span>
-      </a>
+  <div data-controller="navbar">
+    <nav data-navbar-target="navbar" class="navbar-glass fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300">
+      <div class="max-w-6xl mx-auto flex items-center justify-between">
+        <!-- Logo / Name -->
+        <a href="#hero" class="text-white font-bold text-lg hover:text-neon-400 transition-colors">
+          GL<span class="text-neon-500">.</span>
+        </a>
 
-      <!-- Nav Links -->
-      <div class="flex items-center gap-8">
-        <a href="#pushswap" class="text-gray-400 hover:text-neon-400 transition-colors text-sm">
-          Push_swap
-        </a>
-        <a href="#projects" class="text-gray-400 hover:text-neon-400 transition-colors text-sm">
-          Projets
-        </a>
-        <a href="#contact" class="btn-neon text-sm px-4 py-2">
-          Contact
-        </a>
+        <!-- Nav Links Desktop -->
+        <div class="hidden md:flex items-center gap-6">
+          <a href="#about" data-navbar-target="link" class="nav-link text-gray-400 hover:text-neon-400 transition-colors text-sm">
+            À propos
+          </a>
+          <a href="#village" data-navbar-target="link" class="nav-link text-gray-400 hover:text-neon-400 transition-colors text-sm">
+            The Village
+          </a>
+          <a href="#solong" data-navbar-target="link" class="nav-link text-gray-400 hover:text-neon-400 transition-colors text-sm">
+            So_long
+          </a>
+          <a href="#pushswap" data-navbar-target="link" class="nav-link text-gray-400 hover:text-neon-400 transition-colors text-sm">
+            Push_swap
+          </a>
+          <a href="#ftprintf" data-navbar-target="link" class="nav-link text-gray-400 hover:text-neon-400 transition-colors text-sm">
+            ft_printf
+          </a>
+          <a href="#projects" data-navbar-target="link" class="nav-link text-gray-400 hover:text-neon-400 transition-colors text-sm">
+            Projets
+          </a>
+          <a href="#contact" class="btn-neon btn-neon-fill text-sm px-4 py-2">
+            Contact
+          </a>
+        </div>
+
+        <!-- Hamburger Menu Mobile -->
+        <button data-action="click->navbar#toggleMenu" data-navbar-target="hamburger" class="md:hidden relative z-[70] flex flex-col gap-1.5 p-2 group">
+          <span class="w-6 h-0.5 bg-gray-400 group-hover:bg-neon-400 transition-all duration-300 origin-center"></span>
+          <span class="w-6 h-0.5 bg-gray-400 group-hover:bg-neon-400 transition-all duration-300"></span>
+          <span class="w-6 h-0.5 bg-gray-400 group-hover:bg-neon-400 transition-all duration-300 origin-center"></span>
+        </button>
       </div>
+    </nav>
+
+    <!-- Mobile Menu Dropdown -->
+    <div data-navbar-target="mobileMenu" class="mobile-menu-overlay md:hidden" data-action="click->navbar#closeMenuOnBackdrop">
+      <nav class="mobile-menu-modal">
+        <a href="#about" data-action="click->navbar#closeMenu" class="mobile-menu-link text-gray-300">À propos</a>
+        <a href="#village" data-action="click->navbar#closeMenu" class="mobile-menu-link text-gray-300">The Village</a>
+        <a href="#solong" data-action="click->navbar#closeMenu" class="mobile-menu-link text-gray-300">So_long</a>
+        <a href="#pushswap" data-action="click->navbar#closeMenu" class="mobile-menu-link text-gray-300">Push_swap</a>
+        <a href="#ftprintf" data-action="click->navbar#closeMenu" class="mobile-menu-link text-gray-300">ft_printf</a>
+        <a href="#projects" data-action="click->navbar#closeMenu" class="mobile-menu-link text-gray-300">Projets</a>
+        <a href="#contact" data-action="click->navbar#closeMenu" class="mobile-menu-link text-neon-400 font-medium">Contact</a>
+      </nav>
     </div>
-  </nav>
+  </div>
 
   <!-- ============================================================
        HERO SECTION
@@ -55,16 +89,16 @@
 
       <p
         data-hero-target="subtitle"
-        class="text-xl md:text-2xl text-gray-400 mb-8 font-light"
+        class="text-lg md:text-xl text-gray-400 mb-8 font-light"
       >
-        Développeur <span class="text-neon-400">Full-Stack</span>
+        <span class="text-neon-400">Développeur Full-Stack Rails</span> &bull; Consultant cybersécurité &bull; Strasbourg
       </p>
 
       <div data-hero-target="cta" class="flex flex-wrap gap-4 justify-center">
-        <a href="#pushswap" class="btn-neon-solid">
+        <a href="#village" class="btn-neon-solid">
           Voir mes projets
         </a>
-        <a href="#contact" class="btn-neon">
+        <a href="#contact" class="btn-neon btn-neon-fill">
           Me contacter
         </a>
       </div>
@@ -76,35 +110,558 @@
   </section>
 
   <!-- Gradient line separator -->
-  <div class="gradient-line"></div>
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
+
+  <!-- ============================================================
+       ABOUT SECTION
+       ============================================================ -->
+  <section id="about" class="relative py-16 md:py-24 bg-grid">
+    <div class="max-w-4xl mx-auto px-4 md:px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 reveal-title" data-scroll-reveal-target="item">
+          À propos<span class="text-neon-500">.</span>
+        </h2>
+      </div>
+
+      <!-- Content -->
+      <div class="space-y-4 md:space-y-8">
+
+        <!-- Le déclic -->
+        <div class="glass-card border-neon p-5 md:p-8 reveal-glow" data-scroll-reveal-target="item">
+          <h3 class="text-lg md:text-xl font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
+            <span class="text-neon-500">&#9679;</span>
+            Le déclic
+          </h3>
+          <p class="text-gray-300 leading-relaxed text-sm md:text-base">
+            Tout a commencé par un mail. Une invitation à découvrir <span class="text-white font-medium">42</span>.
+            À l'époque, j'étais assistant d'éducation — un job stable que j'adorais. Accompagner des ados qui
+            débarquent dans la vie, les aider à trouver leur chemin. Mais je sentais que ma place était ailleurs.
+          </p>
+        </div>
+
+        <!-- Le parcours -->
+        <div class="glass-card border-neon p-5 md:p-8 reveal-glow" data-scroll-reveal-target="item">
+          <h3 class="text-lg md:text-xl font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
+            <span class="text-neon-500">&#9679;</span>
+            Le parcours
+          </h3>
+          <div class="space-y-3 md:space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+            <p>
+              <span class="text-white font-medium">42</span> m'a forgé. 250 heures de code en un mois.
+              Mon travail acharné m'a valu la <span class="text-neon-400 font-medium">5ème place de la piscine</span>
+              — sur 120 candidats. Ce qui me conduit par la suite à des mois de C, d'algorithmie, d'autonomie totale.
+              Pas de profs, pas de cours — juste toi, ton écran, et des problèmes à résoudre.
+              C'est là que j'ai découvert ce qui me fait vibrer : la <span class="text-neon-400">logique pure</span>,
+              comprendre comment tout fonctionne.
+            </p>
+            <p>
+              Ensuite j'ai monté <span class="text-white font-medium">TechFix</span>, ma micro-entreprise de
+              réparation informatique. Ordinateurs, téléphones — je résolvais les problèmes des autres.
+              J'ai appris à gérer des clients, diagnostiquer vite, communiquer clairement.
+              Enrichissant, mais je voulais <span class="text-neon-400">créer</span>, pas réparer.
+            </p>
+            <p>
+              <span class="text-white font-medium">Le Wagon</span> m'a donné les armes : Ruby on Rails,
+              HTML/CSS/JavaScript, SQL, et l'intégration de l'IA. Mon projet final —
+              <span class="text-neon-400 font-medium">The Village</span> — m'a prouvé que je pouvais
+              construire des applications complètes de A à Z.
+            </p>
+          </div>
+        </div>
+
+        <!-- Aujourd'hui -->
+        <div class="glass-card border-neon p-5 md:p-8 reveal-glow" data-scroll-reveal-target="item">
+          <h3 class="text-lg md:text-xl font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
+            <span class="text-neon-500">&#9679;</span>
+            Aujourd'hui
+          </h3>
+          <div class="space-y-3 md:space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+            <p>
+              Freelance et consultant partenaire chez <span class="text-white font-medium">Pilliot Cybersécurité & Informatique</span>.
+              Le dev me permet de construire. La cyber me permet de protéger — anticiper les failles,
+              comprendre les attaques, sécuriser ce qui compte. Les deux me fascinent.
+            </p>
+            <p>
+              Mon approche : j'apprends vite, je m'adapte. Ce portfolio ? J'ai appris
+              <span class="text-neon-400">GSAP, Canvas et les animations au scroll</span> en le construisant.
+              Demain on me demande une nouvelle stack — je creuse et je livre.
+            </p>
+          </div>
+        </div>
+
+        <!-- En dehors du code -->
+        <div class="glass-card border-neon p-5 md:p-8 reveal-glow" data-scroll-reveal-target="item">
+          <h3 class="text-lg md:text-xl font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
+            <span class="text-neon-500">&#9679;</span>
+            En dehors du code
+          </h3>
+          <div class="space-y-3 md:space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+            <p>
+              Quand je ferme VS Code, je suis sur ma <span class="text-white font-medium">Kawasaki Z900</span>
+              — 135cv de décompression pure. Sinon je gratte ma guitare, je game, ou je défends une cause
+              qui me semble juste.
+            </p>
+            <p>
+              Depuis toujours, je supporte pas l'injustice. Gamin, ça m'attirait des ennuis.
+              Aujourd'hui, ça me pousse à créer des <span class="text-neon-400">solutions qui ont du sens</span>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Ce qui me drive -->
+        <div class="glass-card border-neon p-5 md:p-8 reveal-glow" data-scroll-reveal-target="item">
+          <h3 class="text-lg md:text-xl font-semibold text-white mb-3 md:mb-4 flex items-center gap-2">
+            <span class="text-neon-500">&#9679;</span>
+            Ce qui me drive
+          </h3>
+          <ul class="space-y-2 md:space-y-3 text-gray-300 text-sm md:text-base">
+            <li class="flex items-start gap-3">
+              <span class="text-neon-500 mt-0.5">→</span>
+              <span>La <span class="text-white font-medium">logique</span> et la résolution de problèmes</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-500 mt-0.5">→</span>
+              <span>Comprendre comment <span class="text-white font-medium">tout fonctionne</span>, en profondeur</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-500 mt-0.5">→</span>
+              <span><span class="text-white font-medium">Aider les autres</span> — un client, un collègue, un inconnu sur un forum</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-neon-500 mt-0.5">→</span>
+              <span>Ne jamais stagner, <span class="text-neon-400 font-medium">toujours apprendre</span></span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Technologies + Liens -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <!-- Technologies -->
+          <div class="glass-card border-neon p-5 md:p-8 reveal-left" data-scroll-reveal-target="item">
+            <p class="text-gray-500 text-xs md:text-sm uppercase tracking-wider mb-3 md:mb-4">Technologies</p>
+            <div class="flex flex-wrap gap-2">
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Ruby</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Rails</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">JavaScript</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Hotwire</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Stimulus</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Turbo</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Tailwind CSS</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">PostgreSQL</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">C</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Git</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">Linux</span>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full">HTML/CSS</span>
+            </div>
+          </div>
+
+          <!-- Liens -->
+          <div class="glass-card border-neon p-5 md:p-8 reveal-right" data-scroll-reveal-target="item">
+            <p class="text-gray-500 text-xs md:text-sm uppercase tracking-wider mb-3 md:mb-4">Retrouvez-moi</p>
+            <div class="space-y-2 md:space-y-3">
+              <a href="https://github.com/greegs0" target="_blank" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+                <i class="fa-brands fa-github text-lg"></i>
+                GitHub
+              </a>
+              <a href="https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/" target="_blank" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+                <i class="fa-brands fa-linkedin text-lg"></i>
+                LinkedIn
+              </a>
+              <a href="https://www.malt.fr/profile/gregorylefebvre1" target="_blank" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+                <i class="fa-solid fa-globe text-lg"></i>
+                Malt
+              </a>
+              <a href="mailto:gregory.lfb1@gmail.com" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+                <i class="fa-solid fa-envelope text-lg"></i>
+                gregory.lfb1@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
+
+  <!-- ============================================================
+       THE VILLAGE SECTION
+       ============================================================ -->
+  <section id="village" class="relative py-16 md:py-24 bg-grid">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 reveal-title" data-scroll-reveal-target="item">
+          The Village
+        </h2>
+        <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
+          <em>"It takes a village to build a happy family"</em> — Application Full-Stack pour
+          <span class="text-neon-400">connecter les familles</span> avec leur entourage et leur communauté locale.
+        </p>
+      </div>
+
+      <!-- Features Cards -->
+      <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+        <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+          <span class="text-neon-500">&#9679;</span>
+          Fonctionnalités principales
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+          <div>
+            <ul class="space-y-2 md:space-y-3 text-gray-300">
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Dashboard familial</strong> avec statistiques et calendrier</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Gestion des tâches</strong> assignables aux membres</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Calendrier partagé</strong> avec 7 types d'événements</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Village Assistant</strong> — Chat IA (GPT-4o-mini)</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <ul class="space-y-2 md:space-y-3 text-gray-300">
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Événements communautaires</strong> avec carte Leaflet.js</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Gestion documentaire</strong> avec Active Storage</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Authentification</strong> complète avec Devise</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-neon-500">→</span>
+                <span><strong class="text-white">Internationalisation</strong> FR/EN native</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-10 reveal-fade-up" data-scroll-reveal-target="item">
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Rails 7</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Hotwire</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Stimulus</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Turbo</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">PostgreSQL</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">OpenAI API</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Leaflet.js</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Bootstrap 5</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Devise</span>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30">Docker</span>
+      </div>
+
+      <!-- Video Demo -->
+      <div class="glass-card border-neon overflow-hidden max-w-5xl mx-auto mb-6 md:mb-10 reveal-scale" data-scroll-reveal-target="item">
+        <!-- Video Header -->
+        <div class="flex items-center gap-3 px-4 py-3 bg-dark-800 border-b border-dark-700">
+          <div class="flex gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <span class="text-gray-400 text-sm">Demo Video</span>
+          </div>
+        </div>
+
+        <!-- YouTube Embed -->
+        <div class="relative w-full" style="padding-bottom: 56.25%;">
+          <iframe
+            class="absolute inset-0 w-full h-full"
+            src="https://www.youtube.com/embed/tomIe2NLP6c?hd=1&rel=0&modestbranding=1"
+            title="The Village - Demo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Preview Card -->
+      <a href="https://www.the-village.website" target="_blank" class="block glass-card border-neon overflow-hidden max-w-5xl mx-auto group cursor-pointer">
+        <!-- Browser Header -->
+        <div class="flex items-center gap-3 px-4 py-3 bg-dark-800 border-b border-dark-700">
+          <div class="flex gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+            <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <div class="bg-dark-700 rounded-lg px-4 py-1.5 flex items-center gap-2 max-w-md w-full">
+              <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+              </svg>
+              <span class="text-gray-400 text-sm truncate">the-village.website</span>
+            </div>
+          </div>
+          <span class="text-gray-400 group-hover:text-neon-400 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+            </svg>
+          </span>
+        </div>
+
+        <!-- Preview Content -->
+        <div class="relative bg-gradient-to-br from-dark-800 to-dark-900 p-8 md:p-12 text-center">
+          <!-- Content -->
+          <div class="flex flex-col items-center justify-center">
+            <div class="w-16 h-16 rounded-full bg-neon-500/20 flex items-center justify-center mb-4 group-hover:bg-neon-500/30 transition-colors">
+              <svg class="w-8 h-8 text-neon-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+              </svg>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-neon-400 transition-colors">
+              Essayer The Village
+            </h3>
+            <p class="text-gray-400 mb-4 text-sm">
+              Testez l'application en ligne
+            </p>
+            <span class="inline-flex items-center gap-2 text-neon-400 font-medium group-hover:gap-3 transition-all">
+              Ouvrir l'application
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
+
+  <!-- ============================================================
+       SO_LONG SECTION
+       ============================================================ -->
+  <section id="solong" class="relative py-16 md:py-24 bg-grid" data-controller="solong">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+
+      <!-- Section Header -->
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 flex items-center justify-center gap-3 md:gap-4 reveal-title" data-scroll-reveal-target="item">
+          So_long
+          <a href="https://github.com/greegs0/so_long" target="_blank" class="text-gray-600 hover:text-neon-400 transition-colors" title="Voir sur GitHub">
+            <i class="fa-brands fa-github text-2xl md:text-3xl"></i>
+          </a>
+        </h2>
+        <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
+          Petit jeu 2D en C avec la MiniLibX. Collecte tous les items et atteint la sortie
+          avec le <span class="text-neon-400">minimum de mouvements</span>.
+        </p>
+      </div>
+
+      <!-- Rules Card -->
+      <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+        <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+          <span class="text-neon-500">&#9679;</span>
+          Les règles du jeu
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+          <div>
+            <p class="font-medium text-neon-400 mb-2 md:mb-3">Contrôles :</p>
+            <ul class="space-y-1.5 md:space-y-2 text-gray-300">
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">Z/W</code>
+                <span>Monter</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">S</code>
+                <span>Descendre</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">Q/A</code>
+                <span>Aller à gauche</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">D</code>
+                <span>Aller à droite</span>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p class="font-medium text-neon-400 mb-2 md:mb-3">Objectifs :</p>
+            <ul class="space-y-1.5 md:space-y-2 text-gray-300">
+              <li class="flex items-center gap-2">
+                <span class="text-neon-500">→</span>
+                Collecter tous les <strong class="text-yellow-400">diamants</strong>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-neon-500">→</span>
+                Atteindre la <strong class="text-purple-400">sortie</strong>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="text-neon-500">→</span>
+                Éviter le <strong class="text-red-400">fantôme</strong> (mode bonus)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map Buttons -->
+      <div class="text-center mb-6 md:mb-8">
+        <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Choisir une map</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <button data-action="click->solong#loadMap1" class="btn-neon text-sm px-4 py-2">Éveil</button>
+          <button data-action="click->solong#loadMap2" class="btn-neon text-sm px-4 py-2">Carrefour</button>
+          <button data-action="click->solong#loadMap3" class="btn-neon text-sm px-4 py-2">Labyrinthe</button>
+          <button data-action="click->solong#loadMap4" class="btn-neon text-sm px-4 py-2">Nexus</button>
+          <button data-action="click->solong#loadMap5" class="btn-neon text-sm px-4 py-2">Enfer</button>
+        </div>
+      </div>
+
+      <!-- Game Canvas -->
+      <div class="relative glass-card border-neon overflow-hidden reveal-scale" data-scroll-reveal-target="item" style="height: 500px;">
+        <canvas data-solong-target="canvas" class="w-full h-full"></canvas>
+      </div>
+
+      <!-- Mobile D-Pad -->
+      <div class="flex justify-center mt-4 md:hidden">
+        <div class="grid grid-cols-3 gap-1 select-none">
+          <div></div>
+          <button
+            data-action="mousedown->solong#startMoveUp touchstart->solong#startMoveUp mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove"
+            class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all"
+          >
+            <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/>
+            </svg>
+          </button>
+          <div></div>
+          <button
+            data-action="mousedown->solong#startMoveLeft touchstart->solong#startMoveLeft mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove"
+            class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all"
+          >
+            <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+          <div class="w-14 h-14 bg-dark-900 rounded-lg border border-dark-700"></div>
+          <button
+            data-action="mousedown->solong#startMoveRight touchstart->solong#startMoveRight mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove"
+            class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all"
+          >
+            <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+          <div></div>
+          <button
+            data-action="mousedown->solong#startMoveDown touchstart->solong#startMoveDown mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove"
+            class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all"
+          >
+            <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="glass-card border-neon p-5 mt-4">
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <!-- Stats -->
+          <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+              <span class="text-gray-500 text-sm">Mouvements:</span>
+              <span data-solong-target="moves" class="text-neon-400 font-mono text-lg">0</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-gray-500 text-sm">Collectibles:</span>
+              <span data-solong-target="collectibles" class="text-yellow-400 font-mono text-lg">0/0</span>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+
+          <!-- Bonus Toggle -->
+          <div class="flex items-center gap-3">
+            <span class="text-gray-500 text-sm">Mode Bonus</span>
+            <button
+              data-action="click->solong#toggleBonus"
+              data-solong-target="bonusToggle"
+              class="relative w-14 h-7 bg-dark-700 rounded-full border border-dark-500 transition-all duration-300 hover:border-red-500/50"
+            >
+              <span class="absolute left-1 top-1 w-5 h-5 bg-gray-500 rounded-full transition-all duration-300"></span>
+            </button>
+          </div>
+
+          <!-- Divider -->
+          <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+
+          <!-- Restart -->
+          <button
+            data-action="click->solong#restart"
+            class="btn-neon btn-neon-fill text-sm px-4 py-2"
+          >
+            Recommencer
+          </button>
+
+          <!-- Status -->
+          <span data-solong-target="status" class="text-sm font-medium"></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gradient line separator -->
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
 
   <!-- ============================================================
        PUSH_SWAP SECTION
        ============================================================ -->
-  <section id="pushswap" class="relative py-24 bg-grid">
-    <div data-controller="pushswap" data-pushswap-speed-value="100" class="max-w-7xl mx-auto px-6">
+  <section id="pushswap" class="relative py-16 md:py-24 bg-grid">
+    <div data-controller="pushswap" data-pushswap-speed-value="100" class="max-w-7xl mx-auto px-4 md:px-6">
 
       <!-- Section Header -->
-      <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 flex items-center justify-center gap-3 md:gap-4 reveal-title" data-scroll-reveal-target="item">
           Push_swap
+          <a href="https://github.com/greegs0/push_swap" target="_blank" class="text-gray-600 hover:text-neon-400 transition-colors" title="Voir sur GitHub">
+            <i class="fa-brands fa-github text-2xl md:text-3xl"></i>
+          </a>
         </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
           Algorithme de tri en C avec seulement deux piles et un set d'opérations limité.
           Le défi : trier n'importe quelle liste avec le <span class="text-neon-400">moins d'opérations possible</span>.
         </p>
       </div>
 
       <!-- Rules Card -->
-      <div class="glass-card border-neon p-8 mb-10 max-w-4xl mx-auto transition-all duration-300">
-        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+      <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto transition-all duration-300 reveal-scale" data-scroll-reveal-target="item">
+        <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
           <span class="text-neon-500">&#9679;</span>
           Les règles du jeu
         </h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
           <div>
-            <p class="font-medium text-neon-400 mb-3">Opérations disponibles :</p>
-            <ul class="space-y-2 text-gray-300">
+            <p class="font-medium text-neon-400 mb-2 md:mb-3">Opérations disponibles :</p>
+            <ul class="space-y-1.5 md:space-y-2 text-gray-300">
               <li class="flex items-start gap-2">
                 <code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">sa/sb</code>
                 <span>Swap les 2 premiers éléments</span>
@@ -124,8 +681,8 @@
             </ul>
           </div>
           <div>
-            <p class="font-medium text-neon-400 mb-3">Objectifs :</p>
-            <ul class="space-y-2 text-gray-300">
+            <p class="font-medium text-neon-400 mb-2 md:mb-3">Objectifs :</p>
+            <ul class="space-y-1.5 md:space-y-2 text-gray-300">
               <li class="flex items-center gap-2">
                 <span class="text-neon-500">→</span>
                 100 nombres : moins de <strong class="text-white">700</strong> opérations
@@ -144,7 +701,7 @@
       </div>
 
       <!-- Size Buttons -->
-      <div class="text-center mb-8">
+      <div class="text-center mb-6 md:mb-8">
         <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Taille de la liste</p>
         <div class="flex flex-wrap justify-center gap-3">
           <button data-action="click->pushswap#generate3" class="btn-neon text-sm px-4 py-2">3</button>
@@ -156,7 +713,7 @@
       </div>
 
       <!-- Visualizer Canvas -->
-      <div class="relative glass-card border-neon overflow-hidden" style="height: 500px;">
+      <div class="relative glass-card border-neon overflow-hidden reveal-scale" data-scroll-reveal-target="item" style="height: 500px;">
         <canvas data-pushswap-target="canvas" class="w-full h-full"></canvas>
       </div>
 
@@ -243,32 +800,35 @@
   </section>
 
   <!-- Gradient line separator -->
-  <div class="gradient-line"></div>
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
 
   <!-- ============================================================
        FT_PRINTF SECTION
        ============================================================ -->
-  <section id="ftprintf" class="relative py-24">
-    <div data-controller="printf" class="max-w-7xl mx-auto px-6">
+  <section id="ftprintf" class="relative py-16 md:py-24 bg-grid">
+    <div data-controller="printf" class="max-w-7xl mx-auto px-4 md:px-6">
 
       <!-- Section Header -->
-      <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+      <div class="text-center mb-8 md:mb-12">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 flex items-center justify-center gap-3 md:gap-4 reveal-title" data-scroll-reveal-target="item">
           ft_printf
+          <a href="https://github.com/greegs0/ft_printf" target="_blank" class="text-gray-600 hover:text-neon-400 transition-colors" title="Voir sur GitHub">
+            <i class="fa-brands fa-github text-2xl md:text-3xl"></i>
+          </a>
         </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
           Recréation de la fonction printf en C. Parsing de format strings,
           gestion des <span class="text-neon-400">conversions</span> et des <span class="text-neon-400">flags</span>.
         </p>
       </div>
 
       <!-- Conversions Card -->
-      <div class="glass-card border-neon p-8 mb-10 max-w-4xl mx-auto">
-        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+      <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+        <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
           <span class="text-neon-500">&#9679;</span>
           Conversions supportées
         </h3>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 text-xs md:text-sm">
           <div class="flex items-center gap-3">
             <code class="text-yellow-400 bg-dark-800 px-3 py-1.5 rounded font-mono">%c</code>
             <span class="text-gray-400">char (1 caractère)</span>
@@ -309,45 +869,45 @@
       </div>
 
       <!-- Simulator -->
-      <div class="glass-card border-neon p-8 max-w-4xl mx-auto">
-        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
+      <div class="glass-card border-neon p-5 md:p-8 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+        <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
           <span class="text-neon-500">&#9679;</span>
           Simulateur interactif
         </h3>
 
         <!-- Format Input -->
-        <div class="mb-6">
-          <label class="text-gray-400 text-sm mb-2 block">Format string</label>
+        <div class="mb-4 md:mb-6">
+          <label class="text-gray-400 text-xs md:text-sm mb-2 block">Format string</label>
           <input
             type="text"
             data-printf-target="format"
             data-action="input->printf#parse"
             value="Bonjour %s ! Tu as %d messages."
-            class="w-full bg-dark-800 border border-dark-600 rounded-lg px-4 py-3 text-white font-mono text-sm focus:border-neon-500 focus:outline-none transition-colors"
+            class="w-full bg-dark-800 border border-dark-600 rounded-lg px-3 md:px-4 py-2.5 md:py-3 text-white font-mono text-xs md:text-sm focus:border-neon-500 focus:outline-none transition-colors"
             placeholder="Ex: Bonjour %s, tu as %d ans"
           >
         </div>
 
         <!-- Arguments -->
-        <div class="mb-6">
-          <label class="text-gray-400 text-sm mb-2 block">Arguments</label>
+        <div class="mb-4 md:mb-6">
+          <label class="text-gray-400 text-xs md:text-sm mb-2 block">Arguments</label>
           <div data-printf-target="argsContainer" class="flex flex-wrap gap-3">
             <!-- Arguments générés dynamiquement -->
           </div>
         </div>
 
         <!-- Parsing Visualization -->
-        <div class="mb-6">
-          <label class="text-gray-400 text-sm mb-2 block">Parsing</label>
-          <div data-printf-target="parsing" class="bg-dark-900 rounded-lg p-4 font-mono text-sm flex flex-wrap gap-1 min-h-[48px]">
+        <div class="mb-4 md:mb-6">
+          <label class="text-gray-400 text-xs md:text-sm mb-2 block">Parsing</label>
+          <div data-printf-target="parsing" class="bg-dark-900 rounded-lg p-3 md:p-4 font-mono text-xs md:text-sm flex flex-wrap gap-1 min-h-[44px] md:min-h-[48px]">
             <!-- Tokens générés dynamiquement -->
           </div>
         </div>
 
         <!-- Output -->
         <div>
-          <label class="text-gray-400 text-sm mb-2 block">Output</label>
-          <div class="bg-dark-900 rounded-lg p-4 border border-dark-700">
+          <label class="text-gray-400 text-xs md:text-sm mb-2 block">Output</label>
+          <div class="bg-dark-900 rounded-lg p-3 md:p-4 border border-dark-700">
             <code data-printf-target="output" class="text-neon-400 font-mono"></code>
             <span data-printf-target="charCount" class="text-gray-500 text-xs ml-4"></span>
           </div>
@@ -369,259 +929,158 @@
   </section>
 
   <!-- Gradient line separator -->
-  <div class="gradient-line"></div>
-
-  <!-- ============================================================
-       SO_LONG SECTION
-       ============================================================ -->
-  <section id="solong" class="relative py-24 bg-grid">
-    <div data-controller="solong" class="max-w-7xl mx-auto px-6">
-
-      <!-- Section Header -->
-      <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
-          So_long
-        </h2>
-        <p class="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
-          Mini-jeu 2D en C avec la MiniLibX. Collecte tous les items et atteins la sortie
-          avec le <span class="text-neon-400">minimum de mouvements</span>.
-        </p>
-      </div>
-
-      <!-- Rules Card -->
-      <div class="glass-card border-neon p-8 mb-10 max-w-4xl mx-auto">
-        <h3 class="text-white font-semibold mb-6 flex items-center gap-2">
-          <span class="text-neon-500">&#9679;</span>
-          Règles du jeu
-        </h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded bg-cyan-500 shadow-[0_0_10px_rgba(0,200,255,0.5)]"></div>
-            <div>
-              <span class="text-white font-medium">P</span>
-              <p class="text-gray-500 text-xs">Joueur</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded bg-yellow-400 shadow-[0_0_10px_rgba(250,204,21,0.5)]"></div>
-            <div>
-              <span class="text-white font-medium">C</span>
-              <p class="text-gray-500 text-xs">Collectible</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
-            <div>
-              <span class="text-white font-medium">E</span>
-              <p class="text-gray-500 text-xs">Sortie</p>
-            </div>
-          </div>
-          <div class="flex items-center gap-3">
-            <div class="w-8 h-8 rounded bg-dark-600 border border-dark-500"></div>
-            <div>
-              <span class="text-white font-medium">1</span>
-              <p class="text-gray-500 text-xs">Mur</p>
-            </div>
-          </div>
-        </div>
-        <div class="mt-6 pt-6 border-t border-dark-700">
-          <p class="text-gray-400 text-sm">
-            <span class="text-neon-400">Objectif :</span> Collecte tous les items
-            <span class="text-yellow-400">C</span> puis atteins la sortie
-            <span class="text-purple-400">E</span>. Utilise
-            <code class="bg-dark-800 px-2 py-0.5 rounded text-xs">ZQSD</code> ou les
-            <code class="bg-dark-800 px-2 py-0.5 rounded text-xs">flèches</code> pour te déplacer.
-          </p>
-        </div>
-
-        <!-- Bonus Toggle -->
-        <div class="mt-6 pt-6 border-t border-dark-700">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-3">
-              <div class="w-8 h-8 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center">
-                <span class="text-red-400 text-xs">👻</span>
-              </div>
-              <div>
-                <span class="text-white font-medium">Mode Survie</span>
-                <p class="text-gray-500 text-xs">Un fantôme te pourchasse !</p>
-              </div>
-            </div>
-            <button
-              data-action="click->solong#toggleBonus"
-              data-solong-target="bonusToggle"
-              class="relative w-14 h-7 rounded-full bg-dark-700 border border-dark-500 transition-all duration-300 hover:border-red-500/50"
-            >
-              <span class="absolute left-1 top-1 w-5 h-5 rounded-full bg-gray-500 transition-all duration-300"></span>
-            </button>
-          </div>
-          <p class="text-orange-400/70 text-xs mt-3 italic">
-            ⚠️ Le mode survie est un bonus exclusif à cette version web, non implémenté dans la version C originale.
-          </p>
-        </div>
-      </div>
-
-      <!-- Game Area -->
-      <div class="glass-card border-neon overflow-hidden max-w-4xl mx-auto">
-        <!-- Game Header -->
-        <div class="flex items-center justify-between p-4 border-b border-dark-700">
-          <div class="flex items-center gap-4">
-            <div class="flex items-center gap-2">
-              <span class="text-gray-400 text-sm">Mouvements:</span>
-              <span data-solong-target="moves" class="text-neon-400 font-mono text-lg">0</span>
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="text-gray-400 text-sm">Collectibles:</span>
-              <span data-solong-target="collectibles" class="text-yellow-400 font-mono text-lg">0/0</span>
-            </div>
-          </div>
-          <div data-solong-target="status" class="text-sm font-medium"></div>
-        </div>
-
-        <!-- Canvas -->
-        <div class="relative" style="height: 400px;">
-          <canvas data-solong-target="canvas" class="w-full h-full"></canvas>
-        </div>
-
-        <!-- Controls -->
-        <div class="flex items-center justify-center gap-4 p-4 border-t border-dark-700">
-          <button data-action="click->solong#restart" class="btn-neon text-sm px-4 py-2">
-            Recommencer
-          </button>
-        </div>
-      </div>
-
-      <!-- Map Examples -->
-      <div class="text-center mt-8">
-        <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Maps</p>
-        <div class="flex flex-wrap justify-center gap-3">
-          <button data-action="click->solong#loadMap1" class="btn-neon text-sm px-4 py-2">Découverte</button>
-          <button data-action="click->solong#loadMap2" class="btn-neon text-sm px-4 py-2">Carrefour</button>
-          <button data-action="click->solong#loadMap3" class="btn-neon text-sm px-4 py-2">Labyrinthe</button>
-          <button data-action="click->solong#loadMap4" class="btn-neon text-sm px-4 py-2">Spirale</button>
-          <button data-action="click->solong#loadMap5" class="btn-neon text-sm px-4 py-2">Piège</button>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Gradient line separator -->
-  <div class="gradient-line"></div>
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
 
   <!-- ============================================================
        OTHER PROJECTS
        ============================================================ -->
-  <section id="projects" class="py-24 px-6">
+  <section id="projects" class="relative py-16 md:py-24 px-4 md:px-6 bg-grid">
     <div class="max-w-6xl mx-auto">
       <!-- Section Header -->
-      <div class="text-center mb-16">
-        <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+      <div class="text-center mb-10 md:mb-16">
+        <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 reveal-title" data-scroll-reveal-target="item">
           Autres Projets
         </h2>
-        <p class="text-gray-400 max-w-xl mx-auto">
+        <p class="text-gray-400 max-w-xl mx-auto text-sm md:text-base reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
           Une sélection de projets réalisés à l'école 42 et en freelance.
         </p>
       </div>
 
       <!-- Projects Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- So_long -->
-        <div class="glass-card border-neon p-8 group cursor-pointer">
-          <div class="flex items-start justify-between mb-4">
-            <span class="text-neon-500 text-3xl font-mono">01</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger" data-scroll-reveal-target="stagger">
+        <!-- Minitalk -->
+        <a href="https://github.com/greegs0/minitalk" target="_blank" class="glass-card border-neon p-5 md:p-8 group cursor-pointer block">
+          <div class="flex items-start justify-between mb-3 md:mb-4">
+            <span class="text-neon-500 text-2xl md:text-3xl font-mono">01</span>
+            <i class="fa-brands fa-github text-lg text-gray-500 group-hover:text-neon-400 transition-colors"></i>
           </div>
-          <h3 class="text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
-            So_long
+          <h3 class="text-xl md:text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
+            Minitalk
           </h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Mini-jeu 2D en C avec la MiniLibX. Parsing de maps, gestion des sprites et animations.
+          <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 md:mb-4">
+            Communication inter-processus en C via signaux UNIX (SIGUSR1/SIGUSR2). Client-serveur avec gestion Unicode.
           </p>
           <div class="flex gap-2">
             <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">C</span>
-            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">MiniLibX</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">Signals</span>
           </div>
-        </div>
+        </a>
 
-        <!-- ft_printf -->
-        <div class="glass-card border-neon p-8 group cursor-pointer">
-          <div class="flex items-start justify-between mb-4">
-            <span class="text-neon-500 text-3xl font-mono">02</span>
+        <!-- get_next_line -->
+        <a href="https://github.com/greegs0/get_next_line" target="_blank" class="glass-card border-neon p-5 md:p-8 group cursor-pointer block">
+          <div class="flex items-start justify-between mb-3 md:mb-4">
+            <span class="text-neon-500 text-2xl md:text-3xl font-mono">02</span>
+            <i class="fa-brands fa-github text-lg text-gray-500 group-hover:text-neon-400 transition-colors"></i>
           </div>
-          <h3 class="text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
-            ft_printf
+          <h3 class="text-xl md:text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
+            get_next_line
           </h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Recréation de la fonction printf. Gestion des conversions, flags et précisions.
+          <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 md:mb-4">
+            Fonction de lecture ligne par ligne depuis un file descriptor. Gestion de buffer et lecture optimisée.
           </p>
           <div class="flex gap-2">
             <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">C</span>
-            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">Variadic</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">File I/O</span>
           </div>
-        </div>
+        </a>
 
-        <!-- The Village -->
-        <div class="glass-card border-neon p-8 group cursor-pointer">
-          <div class="flex items-start justify-between mb-4">
-            <span class="text-neon-500 text-3xl font-mono">03</span>
+        <!-- Libft -->
+        <a href="https://github.com/greegs0/libft" target="_blank" class="glass-card border-neon p-5 md:p-8 group cursor-pointer block">
+          <div class="flex items-start justify-between mb-3 md:mb-4">
+            <span class="text-neon-500 text-2xl md:text-3xl font-mono">03</span>
+            <i class="fa-brands fa-github text-lg text-gray-500 group-hover:text-neon-400 transition-colors"></i>
           </div>
-          <h3 class="text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
-            The Village
+          <h3 class="text-xl md:text-2xl font-semibold text-white mb-2 group-hover:text-neon-400 transition-colors">
+            Libft
           </h3>
-          <p class="text-gray-400 text-sm leading-relaxed mb-4">
-            Application web Full-Stack. Plateforme communautaire avec authentification et temps réel.
+          <p class="text-gray-400 text-xs md:text-sm leading-relaxed mb-3 md:mb-4">
+            Bibliothèque C personnalisée. Réimplémentation des fonctions standard de la libc + fonctions utilitaires.
           </p>
           <div class="flex gap-2">
-            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">Rails</span>
-            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">React</span>
-            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">PostgreSQL</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">C</span>
+            <span class="text-xs bg-dark-700 text-gray-400 px-2 py-1 rounded">Makefile</span>
           </div>
-        </div>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Gradient line separator -->
-  <div class="gradient-line"></div>
+  <div class="gradient-line" data-scroll-reveal-target="line"></div>
 
   <!-- ============================================================
        CONTACT SECTION
        ============================================================ -->
-  <section id="contact" class="py-32 px-6">
-    <div class="max-w-2xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-6">
+  <section id="contact" class="relative py-20 md:py-32 px-4 md:px-6 overflow-hidden" data-controller="hero">
+    <!-- Canvas background -->
+    <canvas
+      data-hero-target="canvas"
+      class="absolute inset-0 w-full h-full"
+    ></canvas>
+
+    <div class="relative z-10 max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 reveal-title" data-scroll-reveal-target="item">
         Let's talk<span class="text-neon-500">.</span>
       </h2>
-      <p class="text-gray-400 mb-10 text-lg">
+      <p class="text-gray-400 mb-8 md:mb-10 text-base md:text-lg reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
         Une idée de projet ? Une question ? N'hésitez pas à me contacter.
       </p>
 
-      <a href="mailto:greg@email.com" class="btn-neon-solid text-lg inline-flex items-center gap-2">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-        </svg>
-        greg@email.com
+      <a href="mailto:gregory.lfb1@gmail.com" class="btn-neon-solid text-base md:text-lg inline-flex items-center gap-2 reveal-scale reveal-delay-2" data-scroll-reveal-target="item">
+        <i class="fa-solid fa-envelope"></i>
+        <span class="hidden sm:inline">gregory.lfb1@gmail.com</span>
+        <span class="sm:hidden">Me contacter</span>
       </a>
 
       <!-- Social links -->
-      <div class="flex justify-center gap-6 mt-10">
-        <a href="#" class="text-gray-500 hover:text-neon-400 transition-colors">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-          </svg>
+      <div class="flex justify-center gap-6 mt-8 md:mt-10">
+        <a href="https://github.com/greegs0" target="_blank" class="text-gray-500 hover:text-neon-400 transition-colors text-2xl" title="GitHub">
+          <i class="fa-brands fa-github"></i>
         </a>
-        <a href="#" class="text-gray-500 hover:text-neon-400 transition-colors">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
+        <a href="https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/" target="_blank" class="text-gray-500 hover:text-neon-400 transition-colors text-2xl" title="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://www.malt.fr/profile/gregorylefebvre1" target="_blank" class="text-gray-500 hover:text-neon-400 transition-colors text-2xl" title="Malt">
+          <i class="fa-solid fa-globe"></i>
         </a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="py-8 border-t border-dark-700">
-    <div class="text-center text-gray-600 text-sm">
-      <p>© 2025 Greg. Built with Rails & Stimulus.</p>
+  <footer class="py-8 md:py-12 border-t border-dark-700">
+    <div class="max-w-6xl mx-auto px-4 md:px-6">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+        <!-- Logo + Tagline -->
+        <div class="text-center md:text-left">
+          <a href="#hero" class="text-white font-bold text-lg hover:text-neon-400 transition-colors">
+            GL<span class="text-neon-500">.</span>
+          </a>
+          <p class="text-gray-500 text-xs mt-1">Développeur Full-Stack Rails</p>
+        </div>
+
+        <!-- Social Links -->
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/greegs0" target="_blank" class="text-gray-500 hover:text-neon-400 transition-colors" title="GitHub">
+            <i class="fa-brands fa-github text-lg"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/" target="_blank" class="text-gray-500 hover:text-neon-400 transition-colors" title="LinkedIn">
+            <i class="fa-brands fa-linkedin text-lg"></i>
+          </a>
+          <a href="https://www.malt.fr/profile/gregorylefebvre1" target="_blank" class="text-gray-500 hover:text-neon-400 transition-colors" title="Malt">
+            <i class="fa-solid fa-globe text-lg"></i>
+          </a>
+          <a href="mailto:gregory.lfb1@gmail.com" class="text-gray-500 hover:text-neon-400 transition-colors" title="Email">
+            <i class="fa-solid fa-envelope text-lg"></i>
+          </a>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center md:text-right">
+          <p class="text-gray-600 text-xs">© 2025 Grégory Lefebvre</p>
+          <p class="text-gray-700 text-xs mt-1">Built with Rails & Stimulus</p>
+        </div>
+      </div>
     </div>
   </footer>
 

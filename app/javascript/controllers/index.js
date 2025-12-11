@@ -15,3 +15,9 @@ application.register("printf", PrintfController)
 
 import SolongController from "./solong_controller"
 application.register("solong", SolongController)
+
+import NavbarController from "./navbar_controller"
+application.register("navbar", NavbarController)
+
+import ScrollRevealController from "./scroll_reveal_controller"
+application.register("scroll-reveal", ScrollRevealController)

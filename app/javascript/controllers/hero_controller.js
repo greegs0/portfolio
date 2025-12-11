@@ -15,13 +15,19 @@ export default class extends Controller {
     this.waves = []  // Tableau pour stocker les ondes de clic
     this.mouse = { x: null, y: null, radius: 150 }
     this.animationId = null
+    this.lastTime = 0  // Pour le calcul du delta time
 
     this.setupCanvas()
     this.createParticles()
-    this.animate()
     this.setupMouseTracking()
     this.setupClickWave()  // Nouveau : gestion du clic
     this.animateEntrance()
+
+    // Démarre l'animation avec requestAnimationFrame qui passe le timestamp
+    requestAnimationFrame((time) => {
+      this.lastTime = time
+      this.animate(time)
+    })
 
     window.addEventListener('resize', this.handleResize.bind(this))
   }
@@ -57,14 +63,18 @@ export default class extends Controller {
 
   createParticles() {
     // Nombre de particules basé sur la taille de l'écran
-    const particleCount = Math.floor((this.width * this.height) / 15000)
+    // Sur mobile (< 768px), on utilise un diviseur plus petit pour avoir plus de particules
+    const isMobile = this.width < 768
+    const divisor = isMobile ? 6000 : 15000
+    const particleCount = Math.max(isMobile ? 60 : 40, Math.floor((this.width * this.height) / divisor))
 
     for (let i = 0; i < particleCount; i++) {
       this.particles.push({
         x: Math.random() * this.width,
         y: Math.random() * this.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
+        // Vitesses en pixels par seconde (à 60 FPS, 0.5 * 60 = 30 pixels/sec)
+        vx: (Math.random() - 0.5) * 30,
+        vy: (Math.random() - 0.5) * 30,
         radius: Math.random() * 2 + 1,
         opacity: Math.random() * 0.5 + 0.2
       })
@@ -108,16 +118,16 @@ export default class extends Controller {
         radius: 0,         // Rayon actuel (commence à 0)
         maxRadius: 300,    // Rayon maximum avant disparition
         opacity: 0.4,      // Opacité actuelle
-        speed: 2           // Vitesse d'expansion (pixels par frame)
+        speed: 120         // Vitesse d'expansion en pixels par SECONDE (était 2 par frame à 60fps)
       })
     })
   }
 
-  updateWaves() {
+  updateWaves(deltaTime) {
     // Parcourt toutes les ondes actives
     this.waves.forEach((wave, index) => {
-      // Fait grandir le rayon
-      wave.radius += wave.speed
+      // Fait grandir le rayon (vitesse * temps écoulé)
+      wave.radius += wave.speed * deltaTime
 
       // Diminue l'opacité proportionnellement à l'expansion
       // Plus l'onde est grande, plus elle est transparente
@@ -136,12 +146,12 @@ export default class extends Controller {
         if (dist > wave.radius - waveThickness && dist < wave.radius + waveThickness) {
           // Calcule la force de poussée (plus forte au centre de l'épaisseur)
           const distFromWaveEdge = Math.abs(dist - wave.radius)
-          const force = (1 - distFromWaveEdge / waveThickness) * 0.5
+          const force = (1 - distFromWaveEdge / waveThickness) * 30  // 30 pixels/sec de force max
 
           // Pousse la particule vers l'extérieur (direction = du centre vers la particule)
           const angle = Math.atan2(dy, dx)
-          particle.x += Math.cos(angle) * force * wave.speed
-          particle.y += Math.sin(angle) * force * wave.speed
+          particle.x += Math.cos(angle) * force * deltaTime
+          particle.y += Math.sin(angle) * force * deltaTime
         }
       })
 
@@ -200,18 +210,25 @@ export default class extends Controller {
     })
   }
 
-  animate() {
+  animate(currentTime) {
+    // Calcul du delta time en secondes
+    const deltaTime = (currentTime - this.lastTime) / 1000
+    this.lastTime = currentTime
+
+    // Protection contre les deltas trop grands (ex: onglet inactif)
+    const safeDelta = Math.min(deltaTime, 0.1)
+
     this.ctx.clearRect(0, 0, this.width, this.height)
 
     // Update et draw les ondes de clic
-    this.updateWaves()
+    this.updateWaves(safeDelta)
     this.drawWaves()
 
     // Update et draw particles
     this.particles.forEach((particle, i) => {
-      // Mouvement
-      particle.x += particle.vx
-      particle.y += particle.vy
+      // Mouvement (vitesse * temps = distance)
+      particle.x += particle.vx * safeDelta
+      particle.y += particle.vy * safeDelta
 
       // Rebond sur les bords
       if (particle.x < 0 || particle.x > this.width) particle.vx *= -1
@@ -225,8 +242,9 @@ export default class extends Controller {
 
         if (dist < this.mouse.radius) {
           const force = (this.mouse.radius - dist) / this.mouse.radius
-          particle.x += dx * force * 0.02
-          particle.y += dy * force * 0.02
+          // Force de répulsion : 60 pixels/sec max
+          particle.x += dx * force * 1.2 * safeDelta
+          particle.y += dy * force * 1.2 * safeDelta
         }
       }
 
@@ -272,7 +290,7 @@ export default class extends Controller {
       }
     })
 
-    this.animationId = requestAnimationFrame(() => this.animate())
+    this.animationId = requestAnimationFrame((time) => this.animate(time))
   }
 
   animateEntrance() {

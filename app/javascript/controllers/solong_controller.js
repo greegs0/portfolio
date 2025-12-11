@@ -26,9 +26,16 @@ export default class extends Controller {
     this.setupCanvas()
     this.bonusEnabled = false  // Mode bonus désactivé par défaut
     this.particles = []        // Système de particules pour les effets
+    this.lastTime = 0          // Pour le delta time
     this.loadMap1()
     this.bindKeys()
-    this.animate()
+    this.bindTouch()
+
+    // Démarre l'animation avec le timestamp
+    requestAnimationFrame((time) => {
+      this.lastTime = time
+      this.animate(time)
+    })
   }
 
   disconnect() {
@@ -68,6 +75,88 @@ export default class extends Controller {
   }
 
   // ============================================================
+  // CONTROLES TACTILES (MOBILE) - D-PAD
+  // ============================================================
+  // Boutons directionnels pour mobile avec effet hold (répétition)
+
+  bindTouch() {
+    this.holdInterval = null
+    this.holdDelay = 150  // Délai initial avant répétition (ms)
+    this.holdSpeed = 80   // Vitesse de répétition (ms)
+  }
+
+  // Démarre le mouvement continu (appelé sur mousedown/touchstart)
+  startMove(direction) {
+    if (this.gameOver) return
+
+    // Premier mouvement immédiat
+    this.executeMove(direction)
+
+    // Délai avant de commencer la répétition
+    this.holdTimeout = setTimeout(() => {
+      // Répétition continue
+      this.holdInterval = setInterval(() => {
+        if (!this.gameOver) {
+          this.executeMove(direction)
+        } else {
+          this.stopMove()
+        }
+      }, this.holdSpeed)
+    }, this.holdDelay)
+  }
+
+  // Arrête le mouvement continu (appelé sur mouseup/touchend/mouseleave)
+  stopMove() {
+    if (this.holdTimeout) {
+      clearTimeout(this.holdTimeout)
+      this.holdTimeout = null
+    }
+    if (this.holdInterval) {
+      clearInterval(this.holdInterval)
+      this.holdInterval = null
+    }
+  }
+
+  // Exécute un mouvement selon la direction
+  executeMove(direction) {
+    switch (direction) {
+      case 'up':
+        this.movePlayer(0, -1)
+        break
+      case 'down':
+        this.movePlayer(0, 1)
+        break
+      case 'left':
+        this.movePlayer(-1, 0)
+        break
+      case 'right':
+        this.movePlayer(1, 0)
+        break
+    }
+  }
+
+  // Actions pour le D-pad avec hold
+  startMoveUp(e) {
+    e.preventDefault()
+    this.startMove('up')
+  }
+
+  startMoveDown(e) {
+    e.preventDefault()
+    this.startMove('down')
+  }
+
+  startMoveLeft(e) {
+    e.preventDefault()
+    this.startMove('left')
+  }
+
+  startMoveRight(e) {
+    e.preventDefault()
+    this.startMove('right')
+  }
+
+  // ============================================================
   // TOGGLE BONUS
   // ============================================================
   // Active/désactive le mode bonus (ennemi)
@@ -93,10 +182,10 @@ export default class extends Controller {
   // Les maps DOIVENT être fermées par des murs (règle so_long)
 
   loadMap1() {
-    // Map 1: Découverte
+    // Map 1: "Éveil" - Découverte
     // Simple, linéaire, pour apprendre les contrôles
     // L'ennemi spawn loin du joueur avec un chemin prévisible
-    this.currentMap = 1
+    this.currentMap = 'eveil'
     this.map = [
       "1111111111111",
       "1P0000C000001",
@@ -111,9 +200,9 @@ export default class extends Controller {
   }
 
   loadMap2() {
-    // Map 2: Carrefour
+    // Map 2: "Carrefour" - Choix multiples
     // Plusieurs chemins possibles, l'ennemi doit contourner
-    this.currentMap = 2
+    this.currentMap = 'carrefour'
     this.map = [
       "1111111111111111",
       "1P000010000C0001",
@@ -130,9 +219,9 @@ export default class extends Controller {
   }
 
   loadMap3() {
-    // Map 3: Labyrinthe
+    // Map 3: "Labyrinthe" - Perdez-vous
     // Plus grand, plus de collectibles, ennemi plus menaçant
-    this.currentMap = 3
+    this.currentMap = 'labyrinthe'
     this.map = [
       "1111111111111111111",
       "1P00000000C00000001",
@@ -142,17 +231,17 @@ export default class extends Controller {
       "1000010C000000000C1",
       "1110111111101111101",
       "1C00000000100000101",
-      "1011111110101110101",
-      "100C000000001C00E01",
+      "1011111110101110001",
+      "100C000000000C00E01",
       "1111111111111111111"
     ]
-    this.enemySpawn = { x: 17, y: 9 }
+    this.enemySpawn = { x: 17, y: 2 }
     this.initGame()
   }
 
   loadMap4() {
-    // Map 4: Croix - chemins multiples
-    this.currentMap = 4
+    // Map 4: "Nexus" - Croix centrale, chemins multiples
+    this.currentMap = 'nexus'
     this.map = [
       "111111111111111",
       "1C0000100000001",
@@ -174,8 +263,8 @@ export default class extends Controller {
   }
 
   loadMap5() {
-    // Map 5: Piège - couloirs étroits, peu d'échappatoires !
-    this.currentMap = 5
+    // Map 5: "Enfer" - Couloirs étroits, peu d'échappatoires !
+    this.currentMap = 'enfer'
     this.map = [
       "1111111111111111111",
       "1P000C0CC10000000C1",
@@ -241,12 +330,13 @@ export default class extends Controller {
 
     // Initialise l'ennemi si bonus activé
     // Vitesse adaptée à la taille de la map : plus la map est grande, plus l'ennemi est rapide
+    // Les vitesses sont maintenant en CASES PAR SECONDE (pas par frame)
     if (this.bonusEnabled && this.enemySpawn) {
       const mapSize = this.cols * this.rows
-      // Base speed: 0.025 pour petites maps, jusqu'à 0.045 pour grandes maps
-      const baseSpeed = 0.025 + (mapSize / 300) * 0.02
-      // Max speed: 0.06 pour petites maps, jusqu'à 0.10 pour grandes maps
-      const maxSpeed = 0.06 + (mapSize / 300) * 0.04
+      // Base speed: ~1.2 cases/sec pour petites maps, ~2.1 cases/sec pour grandes maps
+      const baseSpeed = (0.02 + (mapSize / 300) * 0.015) * 60
+      // Max speed réduit : ~1.8 cases/sec pour petites maps, ~3 cases/sec pour grandes maps
+      const maxSpeed = (0.03 + (mapSize / 300) * 0.02) * 60
 
       this.enemy = {
         x: this.enemySpawn.x,
@@ -257,6 +347,7 @@ export default class extends Controller {
         speed: baseSpeed,
         baseSpeed: baseSpeed,
         maxSpeed: maxSpeed,
+        speedIncrement: 0.001 * 60,  // Incrément par mouvement du joueur (en cases/sec)
         trail: []           // Historique des positions pour la "queue"
       }
     } else {
@@ -377,7 +468,7 @@ export default class extends Controller {
     if (this.enemy) {
       this.enemy.speed = Math.min(
         this.enemy.maxSpeed,
-        this.enemy.speed + 0.001
+        this.enemy.speed + this.enemy.speedIncrement
       )
     }
 
@@ -396,7 +487,7 @@ export default class extends Controller {
   // Il traverse les murs (c'est un fantôme !)
   // Sa position est en float pour un mouvement fluide
 
-  updateEnemy() {
+  updateEnemy(deltaTime) {
     if (!this.enemy || this.gameOver) return
 
     // Direction vers le joueur
@@ -405,10 +496,10 @@ export default class extends Controller {
     const dist = Math.sqrt(dx * dx + dy * dy)
 
     if (dist > 0.1) {
-      // Normalise et applique la vitesse
+      // Normalise et applique la vitesse (cases/sec * temps = cases parcourues)
       // L'ennemi va TOUJOURS vers le joueur (traverse les murs)
-      this.enemy.px += (dx / dist) * this.enemy.speed
-      this.enemy.py += (dy / dist) * this.enemy.speed
+      this.enemy.px += (dx / dist) * this.enemy.speed * deltaTime
+      this.enemy.py += (dy / dist) * this.enemy.speed * deltaTime
 
       // Ajoute la position actuelle au trail (queue du fantôme)
       this.enemy.trail.push({ x: this.enemy.px, y: this.enemy.py })
@@ -465,14 +556,19 @@ export default class extends Controller {
     }
   }
 
-  updateDeathAnimation() {
+  updateDeathAnimation(deltaTime) {
     if (!this.deathAnimation) return
 
     const da = this.deathAnimation
+    // Vitesses en unités par seconde (valeurs originales * 60 pour convertir de "par frame" à "par seconde")
+    const absorbSpeed = 0.025 * 60   // Progression de l'absorption (~1.5/sec)
+    const rotationSpeed = 0.4 * 60   // Rotation en radians/sec (~24/sec)
+    const explodeSpeed = 0.03 * 60   // Progression de l'explosion (~1.8/sec)
+    const messageSpeed = 0.02 * 60   // Progression du message (~1.2/sec)
 
     if (da.phase === 'absorb') {
-      da.progress += 0.025
-      da.rotation += 0.4
+      da.progress += absorbSpeed * deltaTime
+      da.rotation += rotationSpeed * deltaTime
       da.scale = 1 - da.progress * 0.9
 
       // Spawn des particules cyan qui partent du joueur
@@ -489,14 +585,14 @@ export default class extends Controller {
         }
       }
     } else if (da.phase === 'explode') {
-      da.progress += 0.03
+      da.progress += explodeSpeed * deltaTime
 
       if (da.progress >= 0.5) {
         da.phase = 'message'
         da.progress = 0
       }
     } else if (da.phase === 'message') {
-      da.progress += 0.02
+      da.progress += messageSpeed * deltaTime
       da.messageAlpha = Math.min(1, da.progress * 2)
       da.messageScale = Math.min(1, da.progress * 1.5)
 
@@ -528,13 +624,14 @@ export default class extends Controller {
         vy: 0,
         size: 2 + Math.random() * 3,
         life: 1,
-        decay: 0.02 + Math.random() * 0.02,
+        decay: (0.02 + Math.random() * 0.02) * 60,  // Decay en unités par seconde
         color: 'cyan',
-        direction: 'inward'
+        direction: 'inward',
+        inwardSpeed: 4 * 60  // Vitesse en pixels/sec (valeur originale: 4)
       })
     } else {
-      // Explosion rouge depuis l'ennemi
-      const speed = 3 + Math.random() * 5
+      // Explosion rouge depuis l'ennemi (vitesse en pixels/sec, valeurs originales: 3-8 * 60)
+      const speed = (3 + Math.random() * 5) * 60
       this.particles.push({
         x: cx,
         y: cy,
@@ -542,7 +639,7 @@ export default class extends Controller {
         vy: Math.sin(angle) * speed,
         size: 3 + Math.random() * 4,
         life: 1,
-        decay: 0.015 + Math.random() * 0.015,
+        decay: (0.015 + Math.random() * 0.015) * 60,  // Decay en unités par seconde
         color: 'red',
         direction: 'outward'
       })
@@ -573,14 +670,19 @@ export default class extends Controller {
     }
   }
 
-  updateVictoryAnimation() {
+  updateVictoryAnimation(deltaTime) {
     if (!this.victoryAnimation) return
 
     const va = this.victoryAnimation
+    // Vitesses en unités par seconde (valeurs originales * 60 pour convertir de "par frame" à "par seconde")
+    const absorbSpeed = 0.025 * 60   // Progression de l'absorption (~1.5/sec)
+    const rotationSpeed = 0.4 * 60   // Rotation en radians/sec (~24/sec)
+    const explodeSpeed = 0.03 * 60   // Progression de l'explosion (~1.8/sec)
+    const messageSpeed = 0.02 * 60   // Progression du message (~1.2/sec)
 
     if (va.phase === 'absorb') {
-      va.progress += 0.025
-      va.rotation += 0.4
+      va.progress += absorbSpeed * deltaTime
+      va.rotation += rotationSpeed * deltaTime
       va.scale = 1 - va.progress * 0.8
 
       // Spawn des particules qui convergent vers le portail
@@ -597,14 +699,14 @@ export default class extends Controller {
         }
       }
     } else if (va.phase === 'explode') {
-      va.progress += 0.03
+      va.progress += explodeSpeed * deltaTime
 
       if (va.progress >= 0.5) {
         va.phase = 'message'
         va.progress = 0
       }
     } else if (va.phase === 'message') {
-      va.progress += 0.02
+      va.progress += messageSpeed * deltaTime
       va.messageAlpha = Math.min(1, va.progress * 2)
       va.messageScale = Math.min(1, va.progress * 1.5)
 
@@ -621,7 +723,8 @@ export default class extends Controller {
 
     const angle = Math.random() * Math.PI * 2
     const distance = direction === 'inward' ? 100 + Math.random() * 100 : 0
-    const speed = direction === 'inward' ? 2 + Math.random() * 3 : 4 + Math.random() * 6
+    // Vitesses en pixels par seconde (valeurs originales * 60)
+    const speed = direction === 'inward' ? (2 + Math.random() * 3) * 60 : (4 + Math.random() * 6) * 60
 
     this.particles.push({
       x: cx + Math.cos(angle) * distance,
@@ -632,9 +735,10 @@ export default class extends Controller {
       vy: direction === 'outward' ? Math.sin(angle) * speed : 0,
       size: 3 + Math.random() * 4,
       life: 1,
-      decay: 0.015 + Math.random() * 0.015,
+      decay: (0.015 + Math.random() * 0.015) * 60,  // Decay en unités par seconde
       color: Math.random() < 0.5 ? 'purple' : 'cyan',
-      direction: direction
+      direction: direction,
+      inwardSpeed: 4 * 60  // Vitesse de convergence en pixels/sec (valeur originale: 4)
     })
   }
 
@@ -651,7 +755,8 @@ export default class extends Controller {
     // Spawn 15-20 particules dorées
     for (let i = 0; i < 18; i++) {
       const angle = Math.random() * Math.PI * 2
-      const speed = 2 + Math.random() * 4
+      // Vitesse en pixels par seconde (valeurs originales: 2-6 par frame * 60)
+      const speed = (2 + Math.random() * 4) * 60
 
       this.particles.push({
         x: cx,
@@ -660,14 +765,14 @@ export default class extends Controller {
         vy: Math.sin(angle) * speed,
         size: 2 + Math.random() * 3,
         life: 1,
-        decay: 0.02 + Math.random() * 0.02,
+        decay: (0.02 + Math.random() * 0.02) * 60,  // Decay en unités par seconde
         color: 'gold',
         direction: 'outward'
       })
     }
   }
 
-  updateParticles() {
+  updateParticles(deltaTime) {
     for (let i = this.particles.length - 1; i >= 0; i--) {
       const p = this.particles[i]
 
@@ -677,19 +782,23 @@ export default class extends Controller {
         const dy = p.targetY - p.y
         const dist = Math.sqrt(dx * dx + dy * dy)
         if (dist > 2) {
-          p.x += (dx / dist) * 4
-          p.y += (dy / dist) * 4
+          const inwardSpeed = p.inwardSpeed || 240
+          p.x += (dx / dist) * inwardSpeed * deltaTime
+          p.y += (dy / dist) * inwardSpeed * deltaTime
         }
       } else {
         // Particules qui s'éloignent
-        p.x += p.vx
-        p.y += p.vy
-        p.vx *= 0.96  // Friction
-        p.vy *= 0.96
-        p.vy += 0.1   // Gravité légère
+        p.x += p.vx * deltaTime
+        p.y += p.vy * deltaTime
+        // Friction appliquée par seconde (0.96^60 ≈ 0.085 par seconde)
+        const frictionPerSec = Math.pow(0.96, 60)
+        const friction = Math.pow(frictionPerSec, deltaTime)
+        p.vx *= friction
+        p.vy *= friction
+        p.vy += 0.1 * 60 * deltaTime   // Gravité légère (valeur originale: 0.1 par frame)
       }
 
-      p.life -= p.decay
+      p.life -= p.decay * deltaTime
 
       if (p.life <= 0) {
         this.particles.splice(i, 1)
@@ -732,26 +841,34 @@ export default class extends Controller {
   // requestAnimationFrame appelle animate() ~60 fois/seconde
   // C'est ici qu'on met à jour les positions et qu'on redessine
 
-  animate() {
-    this.time += 0.02  // Temps pour les animations (pulse, rotation, etc.)
+  animate(currentTime) {
+    // Calcul du delta time en secondes
+    const deltaTime = (currentTime - this.lastTime) / 1000
+    this.lastTime = currentTime
+
+    // Protection contre les deltas trop grands (ex: onglet inactif)
+    const safeDelta = Math.min(deltaTime, 0.1)
+
+    // Temps pour les animations visuelles (pulse, rotation) - en secondes
+    this.time += safeDelta
 
     // Met à jour l'ennemi
-    this.updateEnemy()
+    this.updateEnemy(safeDelta)
 
     // Met à jour l'animation de mort
-    this.updateDeathAnimation()
+    this.updateDeathAnimation(safeDelta)
 
     // Met à jour l'animation de victoire
-    this.updateVictoryAnimation()
+    this.updateVictoryAnimation(safeDelta)
 
     // Met à jour les particules
-    this.updateParticles()
+    this.updateParticles(safeDelta)
 
     // Redessine tout
     this.draw()
 
     // Boucle
-    this.animationId = requestAnimationFrame(() => this.animate())
+    this.animationId = requestAnimationFrame((time) => this.animate(time))
   }
 
   // ============================================================
@@ -855,7 +972,7 @@ export default class extends Controller {
     const cy = y + this.cellSize / 2
     const radius = this.cellSize * 0.35
 
-    // Effet pulse basé sur le temps
+    // Effet pulse basé sur le temps (valeur originale: sin(time * 3))
     const pulse = Math.sin(this.time * 3) * 0.2 + 0.8
 
     // Glow cyan
@@ -882,9 +999,11 @@ export default class extends Controller {
     const cy = y + this.cellSize / 2
     const size = this.cellSize * 0.25
 
-    // Animation: rotation + flottement
-    const rotation = this.time * 2
-    const bounce = Math.sin(this.time * 4) * 2
+    // Animation: rotation + flottement (temps en secondes)
+    // Valeurs originales: rotation = time * 2, bounce = sin(time * 4) * 2
+    // Donc ~0.3 tour/sec et ~0.6 rebonds/sec
+    const rotation = this.time * 2  // ~0.3 tour par seconde
+    const bounce = Math.sin(this.time * 4) * 2  // ~0.6 rebonds par seconde
 
     this.ctx.save()
     this.ctx.translate(cx, cy + bounce)
@@ -917,6 +1036,7 @@ export default class extends Controller {
     const color = isOpen ? 'rgba(168, 85, 247, 1)' : 'rgba(100, 100, 100, 0.5)'
     const glowColor = isOpen ? 'rgba(168, 85, 247, 0.8)' : 'rgba(100, 100, 100, 0.2)'
 
+    // Pulse : ~0.6 cycles par seconde si ouvert (valeur originale: sin(time * 4))
     const pulse = isOpen ? Math.sin(this.time * 4) * 0.3 + 0.7 : 0.5
 
     this.ctx.shadowColor = glowColor
@@ -982,7 +1102,7 @@ export default class extends Controller {
       this.ctx.fill()
     })
 
-    // Glow rouge
+    // Glow rouge (valeur originale: sin(time * 5))
     const pulse = Math.sin(this.time * 5) * 0.3 + 0.7
     this.ctx.shadowColor = `rgba(239, 68, 68, ${intensity})`
     this.ctx.shadowBlur = 20 * pulse * intensity
@@ -1059,7 +1179,7 @@ export default class extends Controller {
       }
     }
 
-    // L'ennemi pulse de façon menaçante pendant la phase explode
+    // L'ennemi pulse de façon menaçante pendant la phase explode (valeur originale: sin(time * 10))
     if (da.phase === 'explode') {
       const enemyCx = this.offsetX + this.enemy.px * this.cellSize + this.cellSize / 2
       const enemyCy = this.offsetY + this.enemy.py * this.cellSize + this.cellSize / 2
@@ -1124,7 +1244,7 @@ export default class extends Controller {
       }
     }
 
-    // Le portail pulse intensément pendant l'animation
+    // Le portail pulse intensément pendant l'animation (valeur originale: sin(time * 8))
     const portalPulse = 1 + Math.sin(this.time * 8) * 0.2
     this.ctx.shadowColor = 'rgba(168, 85, 247, 0.9)'
     this.ctx.shadowBlur = 30 * portalPulse

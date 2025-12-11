@@ -49,12 +49,14 @@ html {
   background-color: var(--color-dark-950);
   color: #ffffff;
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-display);
   background: linear-gradient(180deg, var(--color-dark-950) 0%, var(--color-dark-900) 100%);
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Selection */
@@ -78,13 +80,14 @@ body {
 
 /* Neon Border */
 .border-neon {
-  border: 1px solid rgba(0, 200, 255, 0.3);
-  box-shadow: var(--shadow-neon-subtle), inset 0 0 20px rgba(0, 200, 255, 0.05);
+  border: 1px solid rgba(0, 200, 255, 0.3) !important;
+  box-shadow: var(--shadow-neon-subtle), inset 0 0 20px rgba(0, 200, 255, 0.05) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 .border-neon:hover {
-  border-color: rgba(0, 200, 255, 0.6);
-  box-shadow: var(--shadow-neon);
+  border-color: rgba(0, 200, 255, 0.5) !important;
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.25), inset 0 0 25px rgba(0, 200, 255, 0.1) !important;
 }
 
 /* Glass Card */
@@ -93,13 +96,7 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 16px;
-  box-shadow: 0 0 0 rgba(0, 200, 255, 0);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.glass-card:hover {
-  border-color: rgba(0, 200, 255, 0.3);
-  box-shadow: 0 0 20px rgba(0, 200, 255, 0.15);
+  transition: all 0.3s ease;
 }
 
 /* Neon Button */
@@ -127,6 +124,11 @@ body {
 
 .btn-neon:hover {
   box-shadow: var(--shadow-neon);
+}
+
+/* Variante avec texte noir au hover (pour navbar, restart, etc.) */
+.btn-neon-fill:hover {
+  color: var(--color-dark-950);
 }
 
 .btn-neon:hover::before {
@@ -169,6 +171,103 @@ body {
   background: rgba(3, 3, 3, 0.8);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0, 200, 255, 0.1);
+}
+
+.navbar-scrolled {
+  background: rgba(3, 3, 3, 0.95);
+  border-bottom: 1px solid rgba(0, 200, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-hidden {
+  transform: translateY(-100%);
+}
+
+/* Hamburger Animation */
+.menu-open span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 4px);
+}
+
+.menu-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-open span:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -4px);
+}
+
+/* Nav Link Active Indicator */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--color-neon-500);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+  border-radius: 1px;
+  box-shadow: 0 0 8px var(--color-neon-500);
+}
+
+.nav-link.text-neon-400::after {
+  width: 100%;
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: transparent;
+  pointer-events: none;
+  transition: background 0.2s ease;
+}
+
+.mobile-menu-overlay.menu-open {
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: auto;
+}
+
+/* Mobile Menu Panel - Compact dropdown */
+.mobile-menu-modal {
+  position: absolute;
+  top: 60px;
+  right: 16px;
+  width: 200px;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 200, 255, 0.15);
+  border-radius: 12px;
+  padding: 8px;
+  transform: translateY(-10px) scale(0.95);
+  opacity: 0;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.mobile-menu-overlay.menu-open .mobile-menu-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* Mobile menu links */
+.mobile-menu-link {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: background 0.2s ease, color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.mobile-menu-link:hover {
+  background: rgba(0, 200, 255, 0.1);
+  color: var(--color-neon-400);
 }
 
 /* Avatar Glow */
@@ -267,4 +366,200 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-neon-700);
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATIONS
+   Utilise des animations CSS (pas transitions) pour garantir le déclenchement
+   ============================================================ */
+
+/* Keyframes pour les différentes animations */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealGlow {
+  from {
+    opacity: 0;
+    transform: translateY(35px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes revealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes revealTitle {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+    text-shadow: 0 0 0 rgba(0, 200, 255, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    text-shadow: 0 0 40px rgba(0, 200, 255, 0.3);
+  }
+}
+
+@keyframes revealBlur {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes staggerReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineReveal {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Gradient Line Animation */
+.gradient-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-neon-500), transparent);
+  transform: scaleX(0);
+}
+
+.gradient-line.line-revealed {
+  animation: lineReveal 3s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+/* Base state - tous les éléments reveal sont invisibles */
+.reveal-item,
+.reveal-fade-up,
+.reveal-scale,
+.reveal-left,
+.reveal-right,
+.reveal-glow,
+.reveal-title,
+.reveal-blur {
+  opacity: 0;
+}
+
+/* Animations déclenchées par la classe .revealed */
+.reveal-item.revealed {
+  animation: revealUp 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-fade-up.revealed {
+  animation: revealUp 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-scale.revealed {
+  animation: revealScale 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-left.revealed {
+  animation: revealLeft 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-right.revealed {
+  animation: revealRight 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-glow.revealed {
+  animation: revealGlow 2.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-title.revealed {
+  animation: revealTitle 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-blur.revealed {
+  animation: revealBlur 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered children animation */
+.reveal-stagger > * {
+  opacity: 0;
+}
+
+.reveal-stagger.revealed > * {
+  animation: staggerReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.reveal-stagger.revealed > *:nth-child(1) { animation-delay: 0.15s; }
+.reveal-stagger.revealed > *:nth-child(2) { animation-delay: 0.3s; }
+.reveal-stagger.revealed > *:nth-child(3) { animation-delay: 0.45s; }
+.reveal-stagger.revealed > *:nth-child(4) { animation-delay: 0.6s; }
+.reveal-stagger.revealed > *:nth-child(5) { animation-delay: 0.75s; }
+.reveal-stagger.revealed > *:nth-child(6) { animation-delay: 0.9s; }
+.reveal-stagger.revealed > *:nth-child(7) { animation-delay: 1.05s; }
+.reveal-stagger.revealed > *:nth-child(8) { animation-delay: 1.2s; }
+
+/* Delay utilities - maintenant pour animation-delay */
+.reveal-delay-1 { animation-delay: 0.15s !important; }
+.reveal-delay-2 { animation-delay: 0.3s !important; }
+.reveal-delay-3 { animation-delay: 0.45s !important; }
+.reveal-delay-4 { animation-delay: 0.6s !important; }
+.reveal-delay-5 { animation-delay: 0.75s !important; }
+
+/* Hover transitions pour les cards (séparé des animations reveal) */
+.reveal-glow,
+.reveal-scale,
+.reveal-left,
+.reveal-right {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
