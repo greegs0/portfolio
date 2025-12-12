@@ -88,14 +88,12 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # Configure with your actual domain before deployment
   config.hosts = [
     "localhost",
-    ENV["RAILS_HOST"],                    # Set RAILS_HOST env var with your domain
-    /.*\.herokuapp\.com/,                 # Heroku
-    /.*\.fly\.dev/,                       # Fly.io
-    /.*\.railway\.app/                    # Railway
-  ].compact
+    "gregory-lefebvre.dev",
+    "www.gregory-lefebvre.dev",
+    /.*\.onrender\.com/                   # Render
+  ]
 
   # Skip DNS rebinding protection for the default health check endpoint.
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
