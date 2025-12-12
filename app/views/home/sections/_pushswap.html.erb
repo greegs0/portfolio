@@ -1,0 +1,81 @@
+<section id="pushswap" class="relative py-16 md:py-24 bg-grid">
+  <div data-controller="pushswap" data-pushswap-speed-value="100" class="max-w-7xl mx-auto px-4 md:px-6">
+    <%= render "shared/section_header",
+        title: "Push_swap",
+        github_url: "https://github.com/greegs0/push_swap",
+        description: raw('Algorithme de tri en C avec seulement deux piles et un set d\'opérations limité. Le défi : trier n\'importe quelle liste avec le <span class="text-neon-400">moins d\'opérations possible</span>.') %>
+
+    <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto transition-all duration-300 reveal-scale" data-scroll-reveal-target="item">
+      <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+        <span class="text-neon-500">&#9679;</span>
+        Les règles du jeu
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+        <div>
+          <p class="font-medium text-neon-400 mb-2 md:mb-3">Opérations disponibles :</p>
+          <ul class="space-y-1.5 md:space-y-2 text-gray-300">
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">sa/sb</code><span>Swap les 2 premiers éléments</span></li>
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">pa/pb</code><span>Push vers l'autre pile</span></li>
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">ra/rb</code><span>Rotate (premier → dernier)</span></li>
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">rra/rrb</code><span>Reverse rotate</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-medium text-neon-400 mb-2 md:mb-3">Objectifs :</p>
+          <ul class="space-y-1.5 md:space-y-2 text-gray-300">
+            <li class="flex items-center gap-2"><span class="text-neon-500">→</span>100 nombres : moins de <strong class="text-white">700</strong> opérations</li>
+            <li class="flex items-center gap-2"><span class="text-neon-500">→</span>500 nombres : moins de <strong class="text-white">5500</strong> opérations</li>
+            <li class="flex items-center gap-2"><span class="text-neon-500">→</span>Tout doit finir trié dans la Stack A</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mb-6 md:mb-8 reveal-fade-up" data-scroll-reveal-target="item">
+      <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Taille de la liste</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <button data-action="click->pushswap#generate3" class="btn-neon btn-neon-fill text-sm px-4 py-2">3</button>
+        <button data-action="click->pushswap#generate5" class="btn-neon btn-neon-fill text-sm px-4 py-2">5</button>
+        <button data-action="click->pushswap#generate10" class="btn-neon btn-neon-fill text-sm px-4 py-2">10</button>
+        <button data-action="click->pushswap#generate100" class="btn-neon btn-neon-fill text-sm px-4 py-2">100</button>
+        <button data-action="click->pushswap#generate500" class="btn-neon btn-neon-fill text-sm px-4 py-2">500</button>
+      </div>
+    </div>
+
+    <div class="relative glass-card border-neon overflow-hidden reveal-scale" data-scroll-reveal-target="item" style="height: 500px;">
+      <canvas data-pushswap-target="canvas" class="w-full h-full"></canvas>
+    </div>
+
+    <div class="glass-card border-neon p-5 mt-4 reveal-fade-up" data-scroll-reveal-target="item">
+      <div class="flex flex-wrap items-center justify-center gap-6">
+        <div class="flex items-center gap-1">
+          <button data-action="click->pushswap#stop" class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all" title="Recommencer" aria-label="Recommencer">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12"/></svg>
+          </button>
+          <button data-action="click->pushswap#stepBack" class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all" title="Étape précédente" aria-label="Étape précédente">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
+          </button>
+          <button data-action="click->pushswap#pause" class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all" title="Pause" aria-label="Mettre en pause">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+          </button>
+          <button data-action="click->pushswap#play" class="p-3 text-dark-950 bg-neon-500 hover:bg-neon-400 rounded-lg transition-all shadow-neon-subtle hover:shadow-neon" title="Lancer le tri" aria-label="Lancer le tri">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <button data-action="click->pushswap#step" class="p-3 text-gray-400 hover:text-neon-400 hover:bg-dark-700 rounded-lg transition-all" title="Étape suivante" aria-label="Étape suivante">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
+          </button>
+        </div>
+        <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+        <div class="flex items-center gap-3">
+          <span class="text-gray-500 text-sm">Vitesse</span>
+          <input type="range" min="1" max="2000" value="200" data-action="input->pushswap#setSpeed" class="w-28 accent-neon-500">
+        </div>
+        <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+        <div class="flex items-center gap-2">
+          <span data-pushswap-target="opCount" class="text-neon-400 font-mono text-lg"></span>
+          <span data-pushswap-target="status" class="text-neon-300 text-sm font-medium"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

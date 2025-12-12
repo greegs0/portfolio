@@ -1,29 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Grégory Lefebvre | Développeur Full-Stack Rails</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Développeur Full-Stack Rails basé à Strasbourg. Création d'applications web modernes avec Ruby on Rails, JavaScript, et Hotwire. Consultant en cybersécurité.">
+
+    <title>Grégory Lefebvre | Développeur Full-Stack Ruby on Rails</title>
+    <meta name="description" content="Développeur Full-Stack Ruby on Rails basé à Strasbourg. Création d'applications web modernes avec Ruby on Rails, HTML/CSS/JS, PostgreSQL et intégration IA. Consultant en cybersécurité.">
     <meta name="author" content="Grégory Lefebvre">
     <meta name="keywords" content="développeur, full-stack, rails, ruby, javascript, strasbourg, freelance, web, application">
+    <meta name="theme-color" content="#030303">
+    <meta name="robots" content="index, follow">
 
-    <!-- Open Graph / Social -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Grégory Lefebvre | Développeur Full-Stack Rails">
-    <meta property="og:description" content="Développeur Full-Stack Rails basé à Strasbourg. Création d'applications web modernes.">
+    <meta property="og:url" content="https://gregory-lefebvre.dev/">
+    <meta property="og:title" content="Grégory Lefebvre | Développeur Full-Stack Ruby on Rails">
+    <meta property="og:description" content="Développeur Full-Stack Ruby on Rails basé à Strasbourg. Création d'applications web modernes avec Ruby on Rails, HTML/CSS/JS, PostgreSQL et intégration IA.">
+    <meta property="og:image" content="https://gregory-lefebvre.dev/og-image.svg">
     <meta property="og:locale" content="fr_FR">
+    <meta property="og:site_name" content="Grégory Lefebvre - Portfolio">
 
-    <!-- Favicon -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Grégory Lefebvre | Développeur Full-Stack Ruby on Rails">
+    <meta name="twitter:description" content="Développeur Full-Stack Ruby on Rails basé à Strasbourg. Création d'applications web modernes.">
+    <meta name="twitter:image" content="https://gregory-lefebvre.dev/og-image.svg">
+
+    <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.svg">
+    <link rel="canonical" href="<%= request.original_url %>">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module", defer: true %>
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Grégory Lefebvre",
+      "jobTitle": "Développeur Full-Stack Ruby on Rails",
+      "description": "Développeur Full-Stack Ruby on Rails et Consultant en cybersécurité basé à Strasbourg",
+      "url": "https://gregory-lefebvre.dev",
+      "email": "gregory.lfb1@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Strasbourg",
+        "addressCountry": "FR"
+      },
+      "sameAs": [
+        "https://github.com/greegs0",
+        "https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/",
+        "https://www.malt.fr/profile/gregorylefebvre1"
+      ],
+      "knowsAbout": ["Ruby on Rails", "HTML/CSS/JS", "PostgreSQL", "API", "Intégration IA", "Hotwire", "Stimulus", "Turbo", "Tailwind CSS", "Cybersécurité"]
+    }
+    </script>
   </head>
 
   <body>

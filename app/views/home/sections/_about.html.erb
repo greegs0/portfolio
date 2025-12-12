@@ -1,0 +1,123 @@
+<section id="about" class="relative py-16 md:py-24 bg-grid">
+  <div class="max-w-4xl mx-auto px-4 md:px-6">
+    <div class="text-center mb-8 md:mb-12">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mb-4 md:mb-6 reveal-title" data-scroll-reveal-target="item">
+        À propos<span class="text-neon-500">.</span>
+      </h2>
+    </div>
+
+    <div class="space-y-4 md:space-y-8">
+      <%= render "home/sections/about/card", title: "Le déclic", content: capture { %>
+        <p class="text-gray-300 leading-relaxed text-sm md:text-base">
+          Tout a commencé par un mail. Une invitation à découvrir <span class="text-white font-medium">42</span>.
+          À l'époque, j'étais assistant d'éducation — un job stable que j'adorais. Accompagner des ados qui
+          débarquent dans la vie, les aider à trouver leur chemin. Mais je sentais que ma place était ailleurs.
+        </p>
+      <% } %>
+
+      <%= render "home/sections/about/card", title: "Le parcours", content: capture { %>
+        <div class="space-y-3 md:space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+          <p>
+            <span class="text-white font-medium">42</span> m'a forgé. 250 heures de code en un mois.
+            Mon travail acharné m'a valu la <span class="text-neon-400 font-medium">5ème place de la piscine</span>
+            — sur 120 candidats. Ce qui me conduit par la suite à des mois de C, d'algorithmie, d'autonomie totale.
+            Pas de profs, pas de cours — juste toi, ton écran, et des problèmes à résoudre.
+            C'est là que j'ai découvert ce qui me fait vibrer : la <span class="text-neon-400">logique pure</span>,
+            comprendre comment tout fonctionne.
+          </p>
+          <p>
+            Ensuite j'ai monté <span class="text-white font-medium">TechFix</span>, ma micro-entreprise de
+            réparation informatique. Ordinateurs, téléphones — je résolvais les problèmes des autres.
+            J'ai appris à gérer des clients, diagnostiquer vite, communiquer clairement.
+            Enrichissant, mais je voulais <span class="text-neon-400">créer</span>, pas réparer.
+          </p>
+          <p>
+            <span class="text-white font-medium">Le Wagon</span> m'a donné les armes : Ruby on Rails,
+            HTML/CSS/JavaScript, SQL, et l'intégration de l'IA. Mon projet final —
+            <span class="text-neon-400 font-medium">The Village</span> — m'a prouvé que je pouvais
+            construire des applications complètes de A à Z.
+          </p>
+        </div>
+      <% } %>
+
+      <%= render "home/sections/about/card", title: "Aujourd'hui", content: capture { %>
+        <div class="space-y-3 md:space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+          <p>
+            Freelance et consultant partenaire chez <span class="text-white font-medium">Pilliot Cybersécurité & Informatique</span>.
+            Le dev me permet de construire. La cyber me permet de protéger — anticiper les failles,
+            comprendre les attaques, sécuriser ce qui compte. Les deux me fascinent.
+          </p>
+          <p>
+            Mon approche : j'apprends vite, je m'adapte. Ce portfolio ? J'ai appris
+            <span class="text-neon-400">GSAP, Canvas et les animations au scroll</span> en le construisant.
+            Demain on me demande une nouvelle stack — je creuse et je livre.
+          </p>
+        </div>
+      <% } %>
+
+      <%= render "home/sections/about/card", title: "En dehors du code", content: capture { %>
+        <div class="space-y-3 md:space-y-4 text-gray-300 leading-relaxed text-sm md:text-base">
+          <p>
+            Quand je ferme VS Code, je suis sur ma <span class="text-white font-medium">Kawasaki Z900</span>
+            — 135cv de décompression pure. Sinon je gratte ma guitare, je game, ou je défends une cause
+            qui me semble juste.
+          </p>
+          <p>
+            Depuis toujours, je supporte pas l'injustice. Gamin, ça m'attirait des ennuis.
+            Aujourd'hui, ça me pousse à créer des <span class="text-neon-400">solutions qui ont du sens</span>.
+          </p>
+        </div>
+      <% } %>
+
+      <%= render "home/sections/about/card", title: "Ce qui me drive", content: capture { %>
+        <ul class="space-y-2 md:space-y-3 text-gray-300 text-sm md:text-base">
+          <li class="flex items-start gap-3">
+            <span class="text-neon-500 mt-0.5">→</span>
+            <span>La <span class="text-white font-medium">logique</span> et la résolution de problèmes</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-neon-500 mt-0.5">→</span>
+            <span>Comprendre comment <span class="text-white font-medium">tout fonctionne</span>, en profondeur</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-neon-500 mt-0.5">→</span>
+            <span><span class="text-white font-medium">Aider les autres</span> — un client, un collègue, un inconnu sur un forum</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="text-neon-500 mt-0.5">→</span>
+            <span>Ne jamais stagner, <span class="text-neon-400 font-medium">toujours apprendre</span></span>
+          </li>
+        </ul>
+      <% } %>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div class="glass-card border-neon p-5 md:p-8 reveal-left" data-scroll-reveal-target="item">
+          <p class="text-gray-500 text-xs md:text-sm uppercase tracking-wider mb-3 md:mb-4">Technologies</p>
+          <div class="flex flex-wrap gap-2">
+            <% ["Ruby on Rails", "HTML/CSS/JS", "PostgreSQL", "API", "Intégration IA", "Hotwire", "Stimulus", "Turbo", "Tailwind CSS", "C", "Git", "Linux"].each do |tech| %>
+              <span class="text-xs bg-dark-700 text-gray-300 px-3 py-1.5 rounded-full"><%= tech %></span>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="glass-card border-neon p-5 md:p-8 reveal-right" data-scroll-reveal-target="item">
+          <p class="text-gray-500 text-xs md:text-sm uppercase tracking-wider mb-3 md:mb-4">Retrouvez-moi</p>
+          <div class="space-y-2 md:space-y-3">
+            <a href="https://github.com/greegs0" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+              <i class="fa-brands fa-github text-lg"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+              <i class="fa-brands fa-linkedin text-lg"></i> LinkedIn
+            </a>
+            <a href="https://www.malt.fr/profile/gregorylefebvre1" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+              <i class="fa-solid fa-globe text-lg"></i> Malt
+            </a>
+            <a href="mailto:gregory.lfb1@gmail.com" class="flex items-center gap-3 text-gray-300 hover:text-neon-400 transition-colors">
+              <i class="fa-solid fa-envelope text-lg"></i> gregory.lfb1@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

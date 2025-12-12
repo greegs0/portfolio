@@ -1,0 +1,35 @@
+<section id="projects" class="relative py-16 md:py-24 px-4 md:px-6 bg-grid">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-10 md:mb-16">
+      <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 reveal-title" data-scroll-reveal-target="item">
+        Autres Projets
+      </h2>
+      <p class="text-gray-400 max-w-xl mx-auto text-sm md:text-base reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
+        Une sélection de projets réalisés à l'école 42 et en freelance.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 reveal-stagger" data-scroll-reveal-target="stagger">
+      <%= render "home/sections/projects/card",
+          number: "01",
+          title: "Minitalk",
+          description: "Communication inter-processus en C via signaux UNIX (SIGUSR1/SIGUSR2). Client-serveur avec gestion Unicode.",
+          tags: %w[C Signals],
+          url: "https://github.com/greegs0/minitalk" %>
+
+      <%= render "home/sections/projects/card",
+          number: "02",
+          title: "get_next_line",
+          description: "Fonction de lecture ligne par ligne depuis un file descriptor. Gestion de buffer et lecture optimisée.",
+          tags: ["C", "File I/O"],
+          url: "https://github.com/greegs0/get_next_line" %>
+
+      <%= render "home/sections/projects/card",
+          number: "03",
+          title: "Libft",
+          description: "Bibliothèque C personnalisée. Réimplémentation des fonctions standard de la libc + fonctions utilitaires.",
+          tags: %w[C Makefile],
+          url: "https://github.com/greegs0/libft" %>
+    </div>
+  </div>
+</section>

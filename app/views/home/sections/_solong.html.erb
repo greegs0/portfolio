@@ -1,0 +1,96 @@
+<section id="solong" class="relative py-16 md:py-24 bg-grid" data-controller="solong">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <%= render "shared/section_header",
+        title: "So_long",
+        github_url: "https://github.com/greegs0/so_long",
+        description: raw('Petit jeu 2D en C avec la MiniLibX. Collecte tous les items et atteint la sortie avec le <span class="text-neon-400">minimum de mouvements</span>.') %>
+
+    <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+      <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+        <span class="text-neon-500">&#9679;</span>
+        Les règles du jeu
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+        <div>
+          <p class="font-medium text-neon-400 mb-2 md:mb-3">Contrôles :</p>
+          <ul class="space-y-1.5 md:space-y-2 text-gray-300">
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">Z/W</code><span>Monter</span></li>
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">S</code><span>Descendre</span></li>
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">Q/A</code><span>Aller à gauche</span></li>
+            <li class="flex items-start gap-2"><code class="text-neon-300 bg-dark-800 px-2 py-0.5 rounded font-mono text-xs">D</code><span>Aller à droite</span></li>
+          </ul>
+        </div>
+        <div>
+          <p class="font-medium text-neon-400 mb-2 md:mb-3">Objectifs :</p>
+          <ul class="space-y-1.5 md:space-y-2 text-gray-300">
+            <li class="flex items-center gap-2"><span class="text-neon-500">→</span>Collecter tous les <strong class="text-yellow-400">diamants</strong></li>
+            <li class="flex items-center gap-2"><span class="text-neon-500">→</span>Atteindre la <strong class="text-purple-400">sortie</strong></li>
+            <li class="flex items-center gap-2"><span class="text-neon-500">→</span>Éviter le <strong class="text-red-400">fantôme</strong> (mode bonus)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mb-6 md:mb-8 reveal-fade-up" data-scroll-reveal-target="item">
+      <p class="text-gray-500 mb-4 text-sm uppercase tracking-wider">Choisir une map</p>
+      <div class="flex flex-wrap justify-center gap-3">
+        <button data-action="click->solong#loadMap1" class="btn-neon btn-neon-fill text-sm px-4 py-2">Éveil</button>
+        <button data-action="click->solong#loadMap2" class="btn-neon btn-neon-fill text-sm px-4 py-2">Carrefour</button>
+        <button data-action="click->solong#loadMap3" class="btn-neon btn-neon-fill text-sm px-4 py-2">Labyrinthe</button>
+        <button data-action="click->solong#loadMap4" class="btn-neon btn-neon-fill text-sm px-4 py-2">Nexus</button>
+        <button data-action="click->solong#loadMap5" class="btn-neon btn-neon-fill text-sm px-4 py-2">Enfer</button>
+      </div>
+    </div>
+
+    <div class="relative glass-card border-neon overflow-hidden reveal-scale" data-scroll-reveal-target="item" style="height: 500px;">
+      <canvas data-solong-target="canvas" class="w-full h-full"></canvas>
+    </div>
+
+    <div class="flex justify-center mt-4 md:hidden">
+      <div class="grid grid-cols-3 gap-1 select-none">
+        <div></div>
+        <button data-action="mousedown->solong#startMoveUp touchstart->solong#startMoveUp mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove" class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all" aria-label="Monter">
+          <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"/></svg>
+        </button>
+        <div></div>
+        <button data-action="mousedown->solong#startMoveLeft touchstart->solong#startMoveLeft mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove" class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all" aria-label="Aller à gauche">
+          <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="w-14 h-14 bg-dark-900 rounded-lg border border-dark-700"></div>
+        <button data-action="mousedown->solong#startMoveRight touchstart->solong#startMoveRight mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove" class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all" aria-label="Aller à droite">
+          <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <div></div>
+        <button data-action="mousedown->solong#startMoveDown touchstart->solong#startMoveDown mouseup->solong#stopMove touchend->solong#stopMove mouseleave->solong#stopMove" class="dpad-btn w-14 h-14 bg-dark-800 border border-neon-500/30 rounded-lg flex items-center justify-center text-neon-400 active:bg-neon-500 active:text-dark-950 transition-all" aria-label="Descendre">
+          <svg class="w-6 h-6 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </button>
+        <div></div>
+      </div>
+    </div>
+
+    <div class="glass-card border-neon p-5 mt-4 reveal-fade-up" data-scroll-reveal-target="item">
+      <div class="flex flex-wrap items-center justify-center gap-6">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-500 text-sm">Mouvements:</span>
+            <span data-solong-target="moves" class="text-neon-400 font-mono text-lg">0</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-gray-500 text-sm">Collectibles:</span>
+            <span data-solong-target="collectibles" class="text-yellow-400 font-mono text-lg">0/0</span>
+          </div>
+        </div>
+        <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+        <div class="flex items-center gap-3">
+          <span class="text-gray-500 text-sm">Mode Bonus</span>
+          <button data-action="click->solong#toggleBonus" data-solong-target="bonusToggle" class="relative w-14 h-7 bg-dark-700 rounded-full border border-dark-500 transition-all duration-300 hover:border-red-500/50">
+            <span class="absolute left-1 top-1 w-5 h-5 bg-gray-500 rounded-full transition-all duration-300"></span>
+          </button>
+        </div>
+        <div class="w-px h-8 bg-dark-600 hidden sm:block"></div>
+        <button data-action="click->solong#restart" class="btn-neon btn-neon-fill text-sm px-4 py-2">Recommencer</button>
+        <span data-solong-target="status" class="text-sm font-medium"></span>
+      </div>
+    </div>
+  </div>
+</section>

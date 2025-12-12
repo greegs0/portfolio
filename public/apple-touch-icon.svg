@@ -1,0 +1,27 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#111111"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="180" height="180" rx="40" fill="url(#bgGrad)"/>
+
+  <!-- Border glow -->
+  <rect x="2" y="2" width="176" height="176" rx="38" fill="none" stroke="#00c8ff" stroke-width="2" opacity="0.3"/>
+
+  <!-- GL initials -->
+  <text x="90" y="115" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="white" filter="url(#glow)">
+    GL
+  </text>
+  <text x="138" y="115" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="700" fill="#00c8ff" filter="url(#glow)">.</text>
+</svg>

@@ -1,0 +1,70 @@
+<section id="village" class="relative py-16 md:py-24 bg-grid">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <%= render "shared/section_header",
+        title: "The Village",
+        description: raw('<em>"It takes a village to build a happy family"</em> — Application Full-Stack pour <span class="text-neon-400">connecter les familles</span> avec leur entourage et leur communauté locale.') %>
+
+    <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+      <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+        <span class="text-neon-500">&#9679;</span>
+        Fonctionnalités principales
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+        <ul class="space-y-2 md:space-y-3 text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Dashboard familial</strong> avec statistiques et calendrier</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Gestion des tâches</strong> assignables aux membres</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Calendrier partagé</strong> avec 7 types d'événements</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Village Assistant</strong> — Chat IA (GPT-4o-mini)</span></li>
+        </ul>
+        <ul class="space-y-2 md:space-y-3 text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Événements communautaires</strong> avec carte Leaflet.js</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Gestion documentaire</strong> avec Active Storage</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Authentification</strong> complète avec Devise</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Internationalisation</strong> FR/EN native</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-10 reveal-fade-up" data-scroll-reveal-target="item">
+      <% ["Ruby on Rails 7", "Hotwire", "Stimulus", "Turbo", "PostgreSQL", "OpenAI API", "Leaflet.js", "Bootstrap 5", "Devise", "Docker"].each do |tech| %>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30"><%= tech %></span>
+      <% end %>
+    </div>
+
+    <div class="glass-card border-neon overflow-hidden max-w-5xl mx-auto mb-6 md:mb-10 reveal-scale" data-scroll-reveal-target="item">
+      <%= render "shared/browser_header", title: "Demo Video" %>
+      <div class="relative w-full" style="padding-bottom: 56.25%;">
+        <iframe
+          class="absolute inset-0 w-full h-full"
+          src="https://www.youtube.com/embed/tomIe2NLP6c?hd=1&rel=0&modestbranding=1"
+          title="The Village - Demo"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+
+    <a href="https://www.the-village.website" target="_blank" rel="noopener noreferrer" class="block glass-card border-neon overflow-hidden max-w-5xl mx-auto group cursor-pointer reveal-scale" data-scroll-reveal-target="item">
+      <%= render "shared/browser_header", url: "the-village.website", show_external: true %>
+      <div class="relative bg-gradient-to-br from-dark-800 to-dark-900 p-8 md:p-12 text-center">
+        <div class="flex flex-col items-center justify-center">
+          <div class="w-16 h-16 rounded-full bg-neon-500/20 flex items-center justify-center mb-4 group-hover:bg-neon-500/30 transition-colors">
+            <svg class="w-8 h-8 text-neon-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </div>
+          <h3 class="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-neon-400 transition-colors">Essayer The Village</h3>
+          <p class="text-gray-400 mb-4 text-sm">Testez l'application en ligne</p>
+          <span class="inline-flex items-center gap-2 text-neon-400 font-medium group-hover:gap-3 transition-all">
+            Ouvrir l'application
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+            </svg>
+          </span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
