@@ -3,13 +3,13 @@
   <h2 class="text-3xl md:text-5xl font-bold text-white mt-4 mb-4 md:mb-6 <%= 'flex items-center justify-center gap-3 md:gap-4' if github_url %> reveal-title" data-scroll-reveal-target="item">
     <%= title %><% unless github_url %><span class="text-neon-500">.</span><% end %>
     <% if github_url %>
-      <a href="<%= github_url %>" target="_blank" rel="noopener noreferrer" class="text-gray-600 hover:text-neon-400 transition-colors" title="Voir sur GitHub">
-        <i class="fa-brands fa-github text-2xl md:text-3xl"></i>
+      <a href="<%= github_url %>" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-neon-400 transition-colors" title="Voir sur GitHub" aria-label="Voir le code source sur GitHub">
+        <i class="fa-brands fa-github text-2xl md:text-3xl" aria-hidden="true"></i>
       </a>
     <% end %>
   </h2>
   <% if description %>
-    <p class="text-gray-400 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
+    <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed reveal-fade-up reveal-delay-1" data-scroll-reveal-target="item">
       <%= description %>
     </p>
   <% end %>

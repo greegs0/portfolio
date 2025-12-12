@@ -1,35 +1,53 @@
 import { Controller } from "@hotwired/stimulus"
-import gsap from "gsap"
 
 /**
  * HeroController
  *
  * Crée un effet de particules connectées (constellation/réseau)
  * avec animations GSAP au scroll.
+ * Optimisé pour le FCP : canvas différé, GSAP chargé dynamiquement
  */
 export default class extends Controller {
   static targets = ["canvas", "avatar", "title", "subtitle", "cta"]
 
   connect() {
     this.particles = []
-    this.waves = []  // Tableau pour stocker les ondes de clic
+    this.waves = []
     this.mouse = { x: null, y: null, radius: 150 }
     this.animationId = null
-    this.lastTime = 0  // Pour le calcul du delta time
+    this.lastTime = 0
+    this.gsap = null
 
+    // Charger GSAP dynamiquement et animer l'entrée immédiatement
+    this.loadGsapAndAnimate()
+
+    // Différer l'initialisation du canvas pour améliorer le FCP
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => this.initCanvas(), { timeout: 200 })
+    } else {
+      setTimeout(() => this.initCanvas(), 100)
+    }
+
+    window.addEventListener('resize', this.handleResize.bind(this))
+  }
+
+  async loadGsapAndAnimate() {
+    const { default: gsap } = await import('gsap')
+    this.gsap = gsap
+    this.animateEntrance()
+  }
+
+  initCanvas() {
     this.setupCanvas()
     this.createParticles()
     this.setupMouseTracking()
-    this.setupClickWave()  // Nouveau : gestion du clic
-    this.animateEntrance()
+    this.setupClickWave()
 
-    // Démarre l'animation avec requestAnimationFrame qui passe le timestamp
+    // Démarre l'animation avec requestAnimationFrame
     requestAnimationFrame((time) => {
       this.lastTime = time
       this.animate(time)
     })
-
-    window.addEventListener('resize', this.handleResize.bind(this))
   }
 
   disconnect() {
@@ -56,17 +74,40 @@ export default class extends Controller {
   }
 
   handleResize() {
-    this.setupCanvas()
-    this.particles = []
-    this.createParticles()
+    const newWidth = window.innerWidth
+    const newHeight = window.innerHeight
+
+    // Sur mobile, ignorer les petits changements de hauteur (barre d'adresse qui apparaît/disparaît)
+    const widthChanged = Math.abs(newWidth - this.width) > 50
+    const heightOnlyChanged = !widthChanged && Math.abs(newHeight - this.height) > 100
+
+    // Rotation d'écran ou changement de largeur significatif = tout recréer
+    if (widthChanged) {
+      this.setupCanvas()
+      this.particles = []
+      this.createParticles()
+    }
+    // Changement de hauteur seul (barre d'adresse mobile) = juste ajuster le canvas
+    else if (heightOnlyChanged) {
+      const canvas = this.canvasTarget
+      const dpr = window.devicePixelRatio || 1
+      this.height = newHeight
+      canvas.height = this.height * dpr
+      canvas.style.height = `${this.height}px`
+      // Repositionner les particules qui seraient hors limites
+      this.particles.forEach(p => {
+        if (p.y > this.height) p.y = this.height - 10
+      })
+    }
+    // Sinon: petit changement = ignorer complètement
   }
 
   createParticles() {
     // Nombre de particules basé sur la taille de l'écran
-    // Sur mobile (< 768px), on utilise un diviseur plus petit pour avoir plus de particules
+    // Réduit sur mobile pour améliorer les performances
     const isMobile = this.width < 768
-    const divisor = isMobile ? 6000 : 15000
-    const particleCount = Math.max(isMobile ? 60 : 40, Math.floor((this.width * this.height) / divisor))
+    const divisor = isMobile ? 8000 : 15000
+    const particleCount = Math.max(isMobile ? 35 : 40, Math.floor((this.width * this.height) / divisor))
 
     for (let i = 0; i < particleCount; i++) {
       this.particles.push({
@@ -112,13 +153,15 @@ export default class extends Controller {
       const y = e.clientY - rect.top
 
       // Crée une nouvelle onde à cette position
+      // Taille réduite sur mobile uniquement
+      const isMobile = this.width < 768
       this.waves.push({
-        x: x,              // Position X du centre de l'onde
-        y: y,              // Position Y du centre de l'onde
-        radius: 0,         // Rayon actuel (commence à 0)
-        maxRadius: 300,    // Rayon maximum avant disparition
-        opacity: 0.4,      // Opacité actuelle
-        speed: 120         // Vitesse d'expansion en pixels par SECONDE (était 2 par frame à 60fps)
+        x: x,
+        y: y,
+        radius: 0,
+        maxRadius: isMobile ? 150 : 300,
+        opacity: 0.4,
+        speed: isMobile ? 80 : 120
       })
     })
   }
@@ -294,6 +337,8 @@ export default class extends Controller {
   }
 
   animateEntrance() {
+    if (!this.gsap) return
+    const gsap = this.gsap
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } })
 
     // Fade in du canvas

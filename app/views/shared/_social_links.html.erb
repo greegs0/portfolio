@@ -1,17 +1,17 @@
 <%# locals: (size: "lg", show_email: true) %>
 <div class="flex items-center gap-4">
-  <a href="https://github.com/greegs0" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-neon-400 transition-colors" title="GitHub">
-    <i class="fa-brands fa-github text-<%= size %>"></i>
+  <a href="https://github.com/greegs0" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-neon-400 transition-colors" title="GitHub" aria-label="Voir mon profil GitHub">
+    <i class="fa-brands fa-github text-<%= size %>" aria-hidden="true"></i>
   </a>
-  <a href="https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-neon-400 transition-colors" title="LinkedIn">
-    <i class="fa-brands fa-linkedin text-<%= size %>"></i>
+  <a href="https://www.linkedin.com/in/gr%C3%A9gory-lefebvre/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-neon-400 transition-colors" title="LinkedIn" aria-label="Voir mon profil LinkedIn">
+    <i class="fa-brands fa-linkedin text-<%= size %>" aria-hidden="true"></i>
   </a>
-  <a href="https://www.malt.fr/profile/gregorylefebvre1" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-neon-400 transition-colors" title="Malt">
-    <i class="fa-solid fa-globe text-<%= size %>"></i>
+  <a href="https://www.malt.fr/profile/gregorylefebvre1" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-neon-400 transition-colors" title="Malt" aria-label="Voir mon profil Malt">
+    <i class="fa-solid fa-globe text-<%= size %>" aria-hidden="true"></i>
   </a>
   <% if show_email %>
-    <a href="mailto:gregory.lfb1@gmail.com" class="text-gray-500 hover:text-neon-400 transition-colors" title="Email">
-      <i class="fa-solid fa-envelope text-<%= size %>"></i>
+    <a href="mailto:gregory.lfb1@gmail.com" class="text-gray-400 hover:text-neon-400 transition-colors" title="Email" aria-label="M'envoyer un email">
+      <i class="fa-solid fa-envelope text-<%= size %>" aria-hidden="true"></i>
     </a>
   <% end %>
 </div>
