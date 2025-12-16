@@ -1,24 +1,32 @@
-# README
+# 🌐 gregory-lefebvre.dev
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Mon portfolio personnel — Développeur Web Full-Stack & IA.
 
-Things you may want to cover:
+🔗 **[Voir le site live](https://gregory-lefebvre.dev)**
 
-* Ruby version
+---
 
-* System dependencies
+## ✨ Fonctionnalités
 
-* Configuration
+- **Hero interactif** — Réseau de nodes animé avec Canvas, cliquable (effet onde)
+- **Animations au scroll** — Apparitions dynamiques avec GSAP
+- **Projets interactifs** — Jeux jouables directement dans le navigateur :
+  - 🎮 So_long (jeu 2D)
+  - 📊 Push_swap (visualisation d'algorithme de tri)
+  - 🖨️ ft_printf (simulateur interactif)
+- **The Village** — Projet final Le Wagon : vidéo démo + accès direct à l'app
+- **100% responsive** — Mobile, tablette, desktop
 
-* Database creation
+---
 
-* Database initialization
+## 🛠️ Stack
 
-* How to run the test suite
+Ruby on Rails 8 | Stimulus | Tailwind CSS | GSAP | Canvas API
 
-* Services (job queues, cache servers, search engines, etc.)
+---
 
-* Deployment instructions
+## 📬 Contact
 
-* ...
+- 💼 [Malt](https://www.malt.fr/profile/gregorylefebvre1)
+- 🔗 [LinkedIn](https://www.linkedin.com/in/grégory-lefebvre)
+- 📧 gregory.lfb1@gmail.com
