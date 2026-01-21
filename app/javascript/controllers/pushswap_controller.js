@@ -24,6 +24,14 @@ export default class extends Controller {
     this.timeoutId = null
     this.originalValues = []
 
+    // Thème
+    this.updateThemeColors()
+    this.themeChangeHandler = () => {
+      this.updateThemeColors()
+      this.draw()
+    }
+    window.addEventListener('theme-changed', this.themeChangeHandler)
+
     // Setup canvas puis génération initiale (sans auto-play)
     this.setupCanvas()
     this.generate(100)
@@ -31,6 +39,28 @@ export default class extends Controller {
 
   disconnect() {
     this.pause()
+    window.removeEventListener('theme-changed', this.themeChangeHandler)
+  }
+
+  updateThemeColors() {
+    const isDark = document.documentElement.classList.contains('dark')
+    if (isDark) {
+      this.colors = {
+        bg: 'rgba(3, 3, 3, 0.8)',
+        text: 'rgba(255, 255, 255, 0.8)',
+        accent: { r: 0, g: 200, b: 255 },  // cyan
+        hueBase: 190,
+        hueRange: 30
+      }
+    } else {
+      this.colors = {
+        bg: 'rgba(232, 232, 236, 0.95)',
+        text: 'rgba(45, 45, 58, 0.9)',
+        accent: { r: 139, g: 92, b: 246 },  // violet
+        hueBase: 270,
+        hueRange: 30
+      }
+    }
   }
 
   setupCanvas() {
@@ -403,7 +433,7 @@ export default class extends Controller {
     const height = this.canvasHeight
 
     // Clear - fond transparent pour glass-card
-    ctx.fillStyle = 'rgba(3, 3, 3, 0.8)'
+    ctx.fillStyle = this.colors.bg
     ctx.fillRect(0, 0, width, height)
 
     const halfWidth = width / 2
@@ -429,18 +459,19 @@ export default class extends Controller {
     })
 
     // Labels
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)'
+    ctx.fillStyle = this.colors.text
     ctx.font = '500 13px system-ui, -apple-system, sans-serif'
     ctx.fillText('Stack A', padding, height - 10)
     ctx.fillText('Stack B', halfWidth + padding, height - 10)
 
     // Ligne centrale avec dégradé néon
+    const { r, g, b } = this.colors.accent
     const gradient = ctx.createLinearGradient(halfWidth, 0, halfWidth, height)
-    gradient.addColorStop(0, 'rgba(0, 200, 255, 0)')
-    gradient.addColorStop(0.1, 'rgba(0, 200, 255, 0.4)')
-    gradient.addColorStop(0.5, 'rgba(0, 200, 255, 0.6)')
-    gradient.addColorStop(0.9, 'rgba(0, 200, 255, 0.4)')
-    gradient.addColorStop(1, 'rgba(0, 200, 255, 0)')
+    gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0)`)
+    gradient.addColorStop(0.1, `rgba(${r}, ${g}, ${b}, 0.4)`)
+    gradient.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, 0.6)`)
+    gradient.addColorStop(0.9, `rgba(${r}, ${g}, ${b}, 0.4)`)
+    gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
     ctx.strokeStyle = gradient
     ctx.lineWidth = 1
     ctx.beginPath()
@@ -480,11 +511,10 @@ export default class extends Controller {
   }
 
   getColor(ratio) {
-    // Dégradé néon : cyan (#00c8ff) -> bleu plus profond
-    // Petites barres = cyan clair, grandes barres = cyan foncé/violet
-    const hue = 190 - ratio * 30  // 190 (cyan) -> 160 (turquoise)
+    // Dégradé basé sur le thème
+    const hue = this.colors.hueBase - ratio * this.colors.hueRange
     const saturation = 85 + ratio * 15
-    const lightness = 60 - ratio * 15  // Plus clair pour petites valeurs
+    const lightness = 60 - ratio * 15
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`
   }
 

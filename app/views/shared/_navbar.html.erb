@@ -1,4 +1,4 @@
-<div data-controller="navbar">
+<div data-controller="navbar theme">
   <nav data-navbar-target="navbar" class="navbar-glass fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300">
     <div class="max-w-6xl mx-auto flex items-center justify-between">
       <a href="#hero" class="text-white font-bold text-lg hover:text-neon-400 transition-colors">
@@ -13,7 +13,18 @@
         <a href="#ftprintf" data-navbar-target="link" class="nav-link text-gray-300 hover:text-neon-400 transition-colors text-sm">ft_printf</a>
         <a href="#projects" data-navbar-target="link" class="nav-link text-gray-300 hover:text-neon-400 transition-colors text-sm">Projets</a>
         <a href="#contact" class="btn-neon btn-neon-fill text-sm px-4 py-2">Contact</a>
+        <button data-action="click->theme#toggle" class="theme-toggle p-2 rounded-lg hover:bg-white/10 dark:hover:bg-white/10 transition-colors" aria-label="Changer de thème">
+          <svg class="w-5 h-5 text-gray-300 hover:text-neon-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path data-theme-target="icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+        </button>
       </div>
+
+      <button data-action="click->theme#toggle" class="theme-toggle md:hidden p-2 rounded-lg hover:bg-white/10 transition-colors mr-1" aria-label="Changer de thème">
+        <svg class="w-5 h-5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path data-theme-target="icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+        </svg>
+      </button>
 
       <button data-action="click->navbar#toggleMenu" data-navbar-target="hamburger" class="md:hidden relative z-[70] flex flex-col gap-1.5 p-2 group" aria-label="Ouvrir le menu de navigation" aria-expanded="false">
         <span class="w-6 h-0.5 bg-gray-400 group-hover:bg-neon-400 transition-all duration-300 origin-center"></span>

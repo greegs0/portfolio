@@ -27,6 +27,12 @@ export default class extends Controller {
     this.bonusEnabled = false  // Mode bonus désactivé par défaut
     this.particles = []        // Système de particules pour les effets
     this.lastTime = 0          // Pour le delta time
+
+    // Thème
+    this.updateThemeColors()
+    this.themeChangeHandler = () => this.updateThemeColors()
+    window.addEventListener('theme-changed', this.themeChangeHandler)
+
     this.loadMap1()
     this.bindKeys()
     this.bindTouch()
@@ -43,6 +49,38 @@ export default class extends Controller {
       cancelAnimationFrame(this.animationId)
     }
     document.removeEventListener('keydown', this.handleKeyDown)
+    window.removeEventListener('theme-changed', this.themeChangeHandler)
+  }
+
+  updateThemeColors() {
+    const isDark = document.documentElement.classList.contains('dark')
+    if (isDark) {
+      this.theme = {
+        bg: '#0a0a0a',
+        wall: '#1a1a1a',
+        wallBorder: 'rgba(0, 200, 255, 0.1)',
+        floor: '#080808',
+        floorBorder: 'rgba(0, 200, 255, 0.05)',
+        player: '#00c8ff',
+        playerLight: '#80e6ff',
+        playerGlow: 'rgba(0, 200, 255, 0.8)',
+        messageBg: 'rgba(10, 10, 10, 0.7)',
+        deathBg: 'rgba(20, 5, 5, 0.8)'
+      }
+    } else {
+      this.theme = {
+        bg: '#E8E8EC',
+        wall: '#D0D0D8',
+        wallBorder: 'rgba(139, 92, 246, 0.25)',
+        floor: '#F0F0F3',
+        floorBorder: 'rgba(139, 92, 246, 0.12)',
+        player: '#8b5cf6',
+        playerLight: '#a78bfa',
+        playerGlow: 'rgba(139, 92, 246, 0.8)',
+        messageBg: 'rgba(240, 240, 243, 0.95)',
+        deathBg: 'rgba(255, 235, 235, 0.95)'
+      }
+    }
   }
 
   // ============================================================
@@ -877,7 +915,7 @@ export default class extends Controller {
 
   draw() {
     // Efface le canvas
-    this.ctx.fillStyle = '#0a0a0a'
+    this.ctx.fillStyle = this.theme.bg
     this.ctx.fillRect(0, 0, this.width, this.height)
 
     // Dessine la grille
@@ -948,21 +986,21 @@ export default class extends Controller {
 
   drawWall(x, y) {
     const padding = 1
-    this.ctx.fillStyle = '#1a1a1a'
+    this.ctx.fillStyle = this.theme.wall
     this.ctx.fillRect(x + padding, y + padding, this.cellSize - padding * 2, this.cellSize - padding * 2)
 
     // Bordure subtile neon
-    this.ctx.strokeStyle = 'rgba(0, 200, 255, 0.1)'
+    this.ctx.strokeStyle = this.theme.wallBorder
     this.ctx.lineWidth = 1
     this.ctx.strokeRect(x + padding, y + padding, this.cellSize - padding * 2, this.cellSize - padding * 2)
   }
 
   drawFloor(x, y) {
     // Grille style Tron
-    this.ctx.fillStyle = '#080808'
+    this.ctx.fillStyle = this.theme.floor
     this.ctx.fillRect(x, y, this.cellSize, this.cellSize)
 
-    this.ctx.strokeStyle = 'rgba(0, 200, 255, 0.05)'
+    this.ctx.strokeStyle = this.theme.floorBorder
     this.ctx.lineWidth = 1
     this.ctx.strokeRect(x, y, this.cellSize, this.cellSize)
   }
@@ -975,20 +1013,20 @@ export default class extends Controller {
     // Effet pulse basé sur le temps (valeur originale: sin(time * 3))
     const pulse = Math.sin(this.time * 3) * 0.2 + 0.8
 
-    // Glow cyan
-    this.ctx.shadowColor = 'rgba(0, 200, 255, 0.8)'
+    // Glow
+    this.ctx.shadowColor = this.theme.playerGlow
     this.ctx.shadowBlur = 15 * pulse
 
     // Cercle principal
     this.ctx.beginPath()
     this.ctx.arc(cx, cy, radius, 0, Math.PI * 2)
-    this.ctx.fillStyle = '#00c8ff'
+    this.ctx.fillStyle = this.theme.player
     this.ctx.fill()
 
     // Cercle intérieur plus clair
     this.ctx.beginPath()
     this.ctx.arc(cx, cy, radius * 0.5, 0, Math.PI * 2)
-    this.ctx.fillStyle = '#80e6ff'
+    this.ctx.fillStyle = this.theme.playerLight
     this.ctx.fill()
 
     this.ctx.shadowBlur = 0
@@ -1264,11 +1302,12 @@ export default class extends Controller {
     const va = this.victoryAnimation
     const centerX = this.width / 2
     const centerY = this.height / 2
+    const isDark = document.documentElement.classList.contains('dark')
 
     this.ctx.save()
 
     // Fond semi-transparent
-    this.ctx.fillStyle = `rgba(10, 10, 10, ${va.messageAlpha * 0.7})`
+    this.ctx.fillStyle = isDark ? `rgba(10, 10, 10, ${va.messageAlpha * 0.7})` : `rgba(250, 250, 250, ${va.messageAlpha * 0.85})`
     this.ctx.fillRect(0, 0, this.width, this.height)
 
     // Texte "VICTOIRE !"
@@ -1288,7 +1327,8 @@ export default class extends Controller {
     // Sous-texte avec stats
     this.ctx.shadowBlur = 10
     this.ctx.font = '18px "Inter", sans-serif'
-    this.ctx.fillStyle = `rgba(200, 200, 200, ${va.messageAlpha})`
+    const isDark2 = document.documentElement.classList.contains('dark')
+    this.ctx.fillStyle = isDark2 ? `rgba(200, 200, 200, ${va.messageAlpha})` : `rgba(80, 80, 100, ${va.messageAlpha})`
     this.ctx.fillText(`${this.moves} mouvements`, 0, 30)
 
     this.ctx.restore()
@@ -1300,11 +1340,12 @@ export default class extends Controller {
     const da = this.deathAnimation
     const centerX = this.width / 2
     const centerY = this.height / 2
+    const isDark = document.documentElement.classList.contains('dark')
 
     this.ctx.save()
 
     // Fond semi-transparent rouge
-    this.ctx.fillStyle = `rgba(20, 5, 5, ${da.messageAlpha * 0.8})`
+    this.ctx.fillStyle = isDark ? `rgba(20, 5, 5, ${da.messageAlpha * 0.8})` : `rgba(255, 240, 240, ${da.messageAlpha * 0.9})`
     this.ctx.fillRect(0, 0, this.width, this.height)
 
     // Texte "GAME OVER"
@@ -1324,12 +1365,12 @@ export default class extends Controller {
     // Sous-texte
     this.ctx.shadowBlur = 10
     this.ctx.font = '18px "Inter", sans-serif'
-    this.ctx.fillStyle = `rgba(200, 200, 200, ${da.messageAlpha})`
+    this.ctx.fillStyle = isDark ? `rgba(200, 200, 200, ${da.messageAlpha})` : `rgba(80, 80, 100, ${da.messageAlpha})`
     this.ctx.fillText('Le fantôme t\'a attrapé !', 0, 15)
 
     // Hint pour réessayer
     this.ctx.font = '14px "Inter", sans-serif'
-    this.ctx.fillStyle = `rgba(150, 150, 150, ${da.messageAlpha * 0.8})`
+    this.ctx.fillStyle = isDark ? `rgba(150, 150, 150, ${da.messageAlpha * 0.8})` : `rgba(100, 100, 120, ${da.messageAlpha * 0.8})`
     this.ctx.fillText('Clique sur Recommencer', 0, 50)
 
     this.ctx.restore()

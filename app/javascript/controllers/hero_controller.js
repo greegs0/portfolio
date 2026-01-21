@@ -17,6 +17,11 @@ export default class extends Controller {
     this.animationId = null
     this.lastTime = 0
     this.gsap = null
+    this.updateThemeColor()
+
+    // Écouter les changements de thème
+    this.themeChangeHandler = () => this.updateThemeColor()
+    window.addEventListener('theme-changed', this.themeChangeHandler)
 
     // Charger GSAP dynamiquement et animer l'entrée immédiatement
     this.loadGsapAndAnimate()
@@ -55,6 +60,20 @@ export default class extends Controller {
       cancelAnimationFrame(this.animationId)
     }
     window.removeEventListener('resize', this.handleResize.bind(this))
+    window.removeEventListener('theme-changed', this.themeChangeHandler)
+  }
+
+  updateThemeColor() {
+    const isDark = document.documentElement.classList.contains('dark')
+    // Bleu néon pour dark mode, violet pour light mode
+    this.particleColor = isDark
+      ? { r: 0, g: 200, b: 255 }      // #00c8ff
+      : { r: 139, g: 92, b: 246 }     // #8b5cf6 (violet)
+  }
+
+  getParticleRgba(opacity) {
+    const c = this.particleColor
+    return `rgba(${c.r}, ${c.g}, ${c.b}, ${opacity})`
   }
 
   setupCanvas() {
@@ -211,14 +230,14 @@ export default class extends Controller {
       // Cercle principal de l'onde
       this.ctx.beginPath()
       this.ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2)
-      this.ctx.strokeStyle = `rgba(0, 200, 255, ${wave.opacity})`
+      this.ctx.strokeStyle = this.getParticleRgba(wave.opacity)
       this.ctx.lineWidth = 2
       this.ctx.stroke()
 
       // Glow de l'onde
       this.ctx.beginPath()
       this.ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2)
-      this.ctx.strokeStyle = `rgba(0, 200, 255, ${wave.opacity * 0.3})`
+      this.ctx.strokeStyle = this.getParticleRgba(wave.opacity * 0.3)
       this.ctx.lineWidth = 6
       this.ctx.stroke()
 
@@ -245,7 +264,7 @@ export default class extends Controller {
           this.ctx.beginPath()
           this.ctx.moveTo(particle.x, particle.y)
           this.ctx.lineTo(pointOnCircleX, pointOnCircleY)
-          this.ctx.strokeStyle = `rgba(0, 200, 255, ${lineOpacity})`
+          this.ctx.strokeStyle = this.getParticleRgba(lineOpacity)
           this.ctx.lineWidth = 1
           this.ctx.stroke()
         }
@@ -294,7 +313,7 @@ export default class extends Controller {
       // Draw particle
       this.ctx.beginPath()
       this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-      this.ctx.fillStyle = `rgba(0, 200, 255, ${particle.opacity})`
+      this.ctx.fillStyle = this.getParticleRgba(particle.opacity)
       this.ctx.fill()
 
       // Connecter les particules proches
@@ -309,7 +328,7 @@ export default class extends Controller {
           this.ctx.beginPath()
           this.ctx.moveTo(particle.x, particle.y)
           this.ctx.lineTo(other.x, other.y)
-          this.ctx.strokeStyle = `rgba(0, 200, 255, ${opacity})`
+          this.ctx.strokeStyle = this.getParticleRgba(opacity)
           this.ctx.lineWidth = 0.5
           this.ctx.stroke()
         }
@@ -326,7 +345,7 @@ export default class extends Controller {
           this.ctx.beginPath()
           this.ctx.moveTo(particle.x, particle.y)
           this.ctx.lineTo(this.mouse.x, this.mouse.y)
-          this.ctx.strokeStyle = `rgba(0, 200, 255, ${opacity})`
+          this.ctx.strokeStyle = this.getParticleRgba(opacity)
           this.ctx.lineWidth = 0.8
           this.ctx.stroke()
         }

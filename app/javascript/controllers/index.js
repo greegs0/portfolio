@@ -21,3 +21,6 @@ application.register("navbar", NavbarController)
 
 import ScrollRevealController from "./scroll_reveal_controller"
 application.register("scroll-reveal", ScrollRevealController)
+
+import ThemeController from "./theme_controller"
+application.register("theme", ThemeController)
