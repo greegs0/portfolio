@@ -546,3 +546,17 @@ body {
 .reveal-right {
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Theme-aware image switching */
+.img-dark-mode {
+  display: block;
+}
+.img-light-mode {
+  display: none;
+}
+:root:not(.dark) .img-dark-mode {
+  display: none;
+}
+:root:not(.dark) .img-light-mode {
+  display: block;
+}

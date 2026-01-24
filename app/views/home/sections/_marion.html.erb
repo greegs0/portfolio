@@ -1,0 +1,41 @@
+<section id="marion" class="relative py-16 md:py-24 bg-grid">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <%= render "shared/section_header",
+        title: "Marion Brendel Bard",
+        description: raw('Site vitrine élégant pour une <span class="text-neon-400">poète et autrice</span> — Design épuré et poétique avec formulaire de commande interactif pour poèmes personnalisés.') %>
+
+    <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+      <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+        <span class="text-neon-500">&#9679;</span>
+        Fonctionnalités principales
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+        <ul class="space-y-2 md:space-y-3 text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Formulaire de commande</strong> interactif multi-étapes</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">3 formules tarifées</strong> avec options personnalisables</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Carrousel de livres</strong> avec liens Amazon</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Galerie photos</strong> interactive</span></li>
+        </ul>
+        <ul class="space-y-2 md:space-y-3 text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Dark & Light mode</strong> avec transition fluide</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Design liquid-glass</strong> épuré et poétique</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Newsletter</strong> avec formulaire d'abonnement</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">100% Responsive</strong> mobile, tablet, desktop</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Optimisé</strong> performances & SEO</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-10 reveal-fade-up" data-scroll-reveal-target="item">
+      <% ["Next.js 15", "React 19", "TypeScript", "Tailwind CSS", "Framer Motion", "Brevo", "Vercel"].each do |tech| %>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30"><%= tech %></span>
+      <% end %>
+    </div>
+
+    <a href="https://marionbrendelbard.fr" target="_blank" rel="noopener noreferrer" class="block glass-card border-neon overflow-hidden max-w-5xl mx-auto group cursor-pointer reveal-scale" data-scroll-reveal-target="item">
+      <%= render "shared/browser_header", url: "marionbrendelbard.fr", show_external: true %>
+      <%= image_tag "siteMarionSombre.png", alt: "Marion Brendel Bard - Dark mode", class: "img-dark-mode w-full h-auto group-hover:scale-[1.02] transition-transform duration-500" %>
+      <%= image_tag "siteMarion.png", alt: "Marion Brendel Bard - Light mode", class: "img-light-mode w-full h-auto group-hover:scale-[1.02] transition-transform duration-500" %>
+    </a>
+  </div>
+</section>
