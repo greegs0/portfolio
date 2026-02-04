@@ -1,0 +1,39 @@
+<section id="nexp" class="relative py-16 md:py-24 bg-grid">
+  <div class="max-w-7xl mx-auto px-4 md:px-6">
+    <%= render "shared/section_header",
+        title: "NexP",
+        description: raw('<em>"Pas un job board. Pas du freelance. Des projets."</em> — Plateforme collaborative SaaS pour <span class="text-neon-400">connecter les développeurs</span> autour de projets communs.') %>
+
+    <div class="glass-card border-neon p-5 md:p-8 mb-6 md:mb-10 max-w-4xl mx-auto reveal-scale" data-scroll-reveal-target="item">
+      <h3 class="text-white font-semibold mb-4 md:mb-6 flex items-center gap-2 text-sm md:text-base">
+        <span class="text-neon-500">&#9679;</span>
+        Fonctionnalités principales
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-xs md:text-sm">
+        <ul class="space-y-2 md:space-y-3 text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Matching intelligent</strong> algorithme 7 critères projet/dev</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Gamification</strong> XP, niveaux et 24+ badges déblocables</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Feed social</strong> posts, likes, commentaires imbriqués</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Messagerie temps réel</strong> DM + chat projet (ActionCable)</span></li>
+        </ul>
+        <ul class="space-y-2 md:space-y-3 text-gray-300">
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Gestion de projets</strong> équipes, rôles et statuts</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">200+ compétences</strong> 14 catégories, recherche fuzzy</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">API REST complète</strong> 50+ endpoints avec JWT</span></li>
+          <li class="flex items-start gap-2"><span class="text-neon-500">→</span><span><strong class="text-white">Analytics</strong> stats plateforme, utilisateurs et tendances</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-10 reveal-fade-up" data-scroll-reveal-target="item">
+      <% ["Ruby 3.3", "Rails 7.1", "PostgreSQL 17", "Hotwire", "Stimulus", "Tailwind CSS", "ActionCable", "Redis", "Devise", "JWT"].each do |tech| %>
+        <span class="text-xs bg-dark-700 text-neon-400 px-3 py-1.5 rounded-full border border-neon-500/30"><%= tech %></span>
+      <% end %>
+    </div>
+
+    <a href="https://nexp.cloud" target="_blank" rel="noopener noreferrer" class="block glass-card border-neon overflow-hidden max-w-5xl mx-auto group cursor-pointer reveal-scale" data-scroll-reveal-target="item">
+      <%= render "shared/browser_header", url: "nexp.cloud", show_external: true %>
+      <%= image_tag "NexP.png", alt: "NexP - Plateforme collaborative pour développeurs", class: "w-full h-auto group-hover:scale-[1.02] transition-transform duration-500" %>
+    </a>
+  </div>
+</section>
